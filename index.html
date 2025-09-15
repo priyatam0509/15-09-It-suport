@@ -255,14 +255,230 @@
             font-size: 0.8em;
             color: #7f8c8d;
         }
+        
+        /* KPI Snapshot Table Styles */
+        .kpi-snapshot {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 2px solid #34495e;
+        }
+        
+        .kpi-snapshot h2 {
+            background: #34495e;
+            color: white;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        
+        .kpi-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+        }
+        
+        .kpi-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 2px solid #34495e;
+            font-size: 1.1em;
+        }
+        
+        .kpi-table td {
+            padding: 15px;
+            border-bottom: 1px solid #bdc3c7;
+            vertical-align: middle;
+            font-size: 1em;
+        }
+        
+        .kpi-table td:first-child {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .kpi-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Intervention Table Styles */
+        .intervention-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 2px solid #34495e;
+        }
+        
+        .intervention-table h2 {
+            background: #34495e;
+            color: white;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        
+        .aging-intervention-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        
+        .aging-intervention-table th {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 2px solid #34495e;
+        }
+        
+        .aging-intervention-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #bdc3c7;
+            vertical-align: top;
+        }
+        
+        .aging-intervention-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .highlight-row {
+            background: #fff3cd !important;
+        }
+        
+        .highlight-row:hover {
+            background: #ffeaa7 !important;
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Header -->
         <div class="header">
-            <h1>IT Support Comprehensive Dashboard</h1>
-            <div class="subtitle">Weekly Analysis Report - September 15, 2025 | 728 Total Tickets Analyzed</div>
+            <h1>Weekly IT Managed Services Dashboard</h1>
+            <div class="subtitle">Analysis Report - September 15, 2025</div>
+        </div>
+        
+        <!-- KPI Snapshot Table -->
+        <div class="kpi-snapshot">
+            <h2>📊 Weekly IT Managed Services — KPI Snapshot</h2>
+            <table class="kpi-table">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Current</th>
+                        <th>Status</th>
+                        <th>Action Needed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🎫 <strong>Tickets</strong></td>
+                        <td>728 total / 21 open</td>
+                        <td>✅ Good</td>
+                        <td>Monitor aging tickets</td>
+                    </tr>
+                    <tr>
+                        <td>📈 <strong>SLA Compliance</strong></td>
+                        <td>~83.7% compliance</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Focus on P1/P2 priorities</td>
+                    </tr>
+                    <tr>
+                        <td>⚡ <strong>Resolution Time</strong></td>
+                        <td>~28.3 days avg aging</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Address long-standing tickets</td>
+                    </tr>
+                    <tr>
+                        <td>⏳ <strong>Aging</strong></td>
+                        <td>Oldest 41 days</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Prioritize 31-60 day bucket</td>
+                    </tr>
+                    <tr>
+                        <td>🏷️ <strong>Priority Hygiene</strong></td>
+                        <td>15 missing priorities</td>
+                        <td>✅ Good</td>
+                        <td>Assign missing priorities</td>
+                    </tr>
+                    <tr>
+                        <td>🚧 <strong>Blocked Items</strong></td>
+                        <td>6 on-hold tickets</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Review hold reasons</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Tickets Needs Intervention Table -->
+        <div class="intervention-table">
+            <h2>⏳ Tickets — Needs Intervention</h2>
+            <table class="aging-intervention-table">
+                <thead>
+                    <tr>
+                        <th><strong>Aging Bucket</strong></th>
+                        <th><strong>Open Tickets</strong></th>
+                        <th><strong>Ticket IDs</strong></th>
+                        <th><strong>Action Needed</strong></th>
+                        <th><strong>Impact if Management Intervenes</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0-2 days</td>
+                        <td>0</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td>3-7 days</td>
+                        <td>0</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td>8-14 days</td>
+                        <td>3</td>
+                        <td>42932 (CCTV), 42935 (Amlock), 42945 (SECTONA PAM)</td>
+                        <td>Monitor and ensure SLA met</td>
+                        <td>Prevents escalation risk</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>15-30 days</td>
+                        <td>9</td>
+                        <td>42675 (IAM), 42676 (New Employee), 42727 (Database), 42735 (Applications), 42753 (Database), 42762 (General), 42778 (New Employee), 42785 (Network), 42895 (General)</td>
+                        <td>Approve access requests, clear onboarding delays, assign & resolve, push user response</td>
+                        <td>⚡ Unblocks user access, 👥 speeds onboarding, ✅ clears backlog, 📊 enables reporting</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>31-60 days</td>
+                        <td>9</td>
+                        <td>42302 (Hardware), 42347 (Software), 42375 (General), 42376 (General), 42424 (IT), 42535 (IAM), 42545 (Database), 42575 (Applications), 42586 (Network)</td>
+                        <td>Review and close/cancel stale tickets, resolve remaining active items</td>
+                        <td>🔐 Improves metrics, 📊 cleans up backlog, ✅ removes aged items</td>
+                    </tr>
+                    <tr>
+                        <td>>60 days</td>
+                        <td>0</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         
         <!-- Main KPI Cards -->
@@ -299,7 +515,7 @@
             
             <div class="kpi-card">
                 <h3>Critical Issues</h3>
-                <div class="kpi-value critical">12</div>
+                <div class="kpi-value critical">18</div>
                 <div class="kpi-subtitle">tickets aging 14+ days</div>
             </div>
         </div>
@@ -587,7 +803,7 @@
                 </div>
                 <div class="metric-item">
                     <div class="metric-label">Critical Aging</div>
-                    <div class="metric-value">12 tickets</div>
+                    <div class="metric-value">18 tickets</div>
                 </div>
                 <div class="metric-item">
                     <div class="metric-label">Database SLA</div>
