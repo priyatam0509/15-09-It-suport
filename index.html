@@ -815,595 +815,1049 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <script>
-        // Comprehensive dashboard data from JSON
-        const dashboardData = {
-            totalTickets: 728,
-            aging_buckets: {
-                "0-2 days": {"count": 0},
-                "3-7 days": {"count": 0},
-                "8-14 days": {"count": 3},
-                "15-30 days": {"count": 9},
-                "31-60 days": {"count": 9},
-                ">60 days": {"count": 0}
-            },
-            priority_distribution: {
-                "P1": 7,
-                "P2": 34,
-                "P3": 425,
-                "P4": 247,
-                "Not Assigned": 15
-            },
-            request_types: {
-                "Incidents": 409,
-                "Service Requests": 319
-            },
-            categories: {
-                "IT Requests": 226,
-                "Database": 99,
-                "General": 74,
-                "S - Security": 56,
-                "S - Network": 45
-            },
-            departments: {
-                "IT": 150,
-                "Customer Care": 84,
-                "Security": 68,
-                "Collection": 42,
-                "Finance": 22
-            },
-            sla_by_priority: {
-                "P1": {"compliance_rate": 28.6, "total": 7, "met": 2, "missed": 5},
-                "P2": {"compliance_rate": 17.6, "total": 34, "met": 6, "missed": 28},
-                "P3": {"compliance_rate": 82.6, "total": 425, "met": 351, "missed": 74},
-                "P4": {"compliance_rate": 95.1, "total": 247, "met": 235, "missed": 12},
-                "Not Assigned": {"compliance_rate": 100.0, "total": 15, "met": 15, "missed": 0}
-            },
-            resolution_times: {
-                "P1": 219.8,
-                "P2": 98.4,
-                "P3": 35.4,
-                "P4": 62.0,
-                "Not Assigned": 472.4
-            },
-            sla_by_category: {
-                "Database": {"compliance_rate": 98.0, "total": 99},
-                "S - Hardware": {"compliance_rate": 100.0, "total": 16},
-                "S - Email": {"compliance_rate": 100.0, "total": 28},
-                "IT requests": {"compliance_rate": 85.4, "total": 226},
-                "General": {"compliance_rate": 47.3, "total": 74},
-                "S - Security": {"compliance_rate": 78.6, "total": 56},
-                "S - Network": {"compliance_rate": 93.3, "total": 45},
-                "Applications": {"compliance_rate": 83.3, "total": 18}
-            },
-            technicians: {
-                "Muhammad Nabeel Fayyaz [SAT]": {"total_tickets": 222, "open_tickets": 4, "closed_tickets": 218, "resolution_rate": 98.2, "priority_breakdown": {"P4": 83, "P3": 138, "P1": 1}},
-                "Devendra Parmar": {"total_tickets": 118, "open_tickets": 1, "closed_tickets": 117, "resolution_rate": 99.2, "priority_breakdown": {"P3": 97, "P4": 20, "P2": 1}},
-                "Mohammed Habeebuddin": {"total_tickets": 88, "open_tickets": 2, "closed_tickets": 86, "resolution_rate": 97.7, "priority_breakdown": {"P4": 83, "Not Assigned": 3, "P3": 2}},
-                "Tony Joseph [SAT]": {"total_tickets": 73, "open_tickets": 1, "closed_tickets": 72, "resolution_rate": 98.6, "priority_breakdown": {"P3": 65, "P2": 1, "P4": 7}},
-                "Yasir Zeeshan Akbar Ali": {"total_tickets": 57, "open_tickets": 2, "closed_tickets": 55, "resolution_rate": 96.5, "priority_breakdown": {"P3": 49, "P4": 7, "P2": 1}},
-                "Jawahr Alotibie": {"total_tickets": 45, "open_tickets": 4, "closed_tickets": 41, "resolution_rate": 91.1, "priority_breakdown": {"P4": 19, "P1": 6, "P3": 10, "Not Assigned": 10}},
-                "Mohammed Adnan Mohammed": {"total_tickets": 35, "open_tickets": 0, "closed_tickets": 35, "resolution_rate": 100.0, "priority_breakdown": {"P2": 30, "P3": 5}},
-                "Ahmed Gaafer Mohamed Mostafa [SAT]": {"total_tickets": 24, "open_tickets": 0, "closed_tickets": 24, "resolution_rate": 100.0, "priority_breakdown": {"P3": 23, "P4": 1}},
-                "Jaffar Ali Rahimansha [SAT]": {"total_tickets": 20, "open_tickets": 1, "closed_tickets": 19, "resolution_rate": 95.0, "priority_breakdown": {"P3": 18, "P4": 2}},
-                "Syed Azam Saleem": {"total_tickets": 19, "open_tickets": 3, "closed_tickets": 16, "resolution_rate": 84.2, "priority_breakdown": {"P3": 6, "P4": 13}}
-            },
-            teams: {
-                "Technical Service Desk": {"total_tickets": 209, "open_tickets": 4, "closed_tickets": 205},
-                "System Services": {"total_tickets": 112, "open_tickets": 2, "closed_tickets": 110},
-                "Network Services": {"total_tickets": 111, "open_tickets": 3, "closed_tickets": 108},
-                "Database Team": {"total_tickets": 107, "open_tickets": 5, "closed_tickets": 102},
-                "IT Team": {"total_tickets": 71, "open_tickets": 1, "closed_tickets": 70},
-                "Applications Team": {"total_tickets": 53, "open_tickets": 5, "closed_tickets": 48}
-            },
-            aging_tickets: [
-                {"request_id": 42932, "subject": "CCTV - Ground Floor", "priority": "P3", "category": "Not Assigned", "technician": "Yasir Zeeshan Akbar Ali", "aging_days": 14, "created_time": "08/31/2025 09:28", "status": "On Hold (Other)"},
-                {"request_id": 42935, "subject": "S - Application - Amlock - Access request", "priority": "P3", "category": "S - Application", "technician": "Yazan Almasri", "aging_days": 14, "created_time": "08/31/2025 10:55", "status": "In Progress"},
-                {"request_id": 42945, "subject": "SECTONA PAM", "priority": "P3", "category": "Not Assigned", "technician": "Yasir Zeeshan Akbar Ali", "aging_days": 14, "created_time": "08/31/2025 15:39", "status": "On Hold (Other)"},
-                {"request_id": 42675, "subject": "S - IAM - User Management - Account Creation", "priority": "P4", "category": "S - IAM", "technician": "Jawahr Alotibie", "aging_days": 28, "created_time": "08/17/2025 10:43", "status": "In Progress"},
-                {"request_id": 42676, "subject": "New Employee - Cyber Security", "priority": "P4", "category": "Not Assigned", "technician": "Muhammad Nabeel Fayyaz [SAT]", "aging_days": 28, "created_time": "08/17/2025 11:24", "status": "On Hold (New Joinee)"},
-                {"request_id": 42727, "subject": "Request for New LCDPD Tableau Sheet", "priority": "P3", "category": "Database", "technician": "Syed Azam Saleem", "aging_days": 26, "created_time": "08/19/2025 16:40", "status": "On Hold (User Response)"},
-                {"request_id": 42735, "subject": "S - Application - Orion - Access Request", "priority": "P4", "category": "S - Application", "technician": "Yazan Almasri", "aging_days": 25, "created_time": "08/20/2025 10:25", "status": "In Progress"},
-                {"request_id": 42895, "subject": "Pending Requests", "priority": "P3", "category": "Not Assigned", "technician": "Jawahr Alotibie", "aging_days": 18, "created_time": "08/27/2025 11:01", "status": "In Progress"},
-                {"request_id": 42302, "subject": "S - Hardware - Telephone - Others", "priority": "P4", "category": "S - Hardware", "technician": "Muhammad Nabeel Fayyaz [SAT]", "aging_days": 41, "created_time": "08/04/2025 17:17", "status": "Cancelled"},
-                {"request_id": 42347, "subject": "S - Software - Apps - Microsoft Office", "priority": "P3", "category": "S - Software", "technician": "Muhammad Nabeel Fayyaz [SAT]", "aging_days": 40, "created_time": "08/05/2025 16:16", "status": "Cancelled"},
-                {"request_id": 42424, "subject": "RE: support", "priority": "P3", "category": "IT requests", "technician": "Jawahr Alotibie", "aging_days": 39, "created_time": "08/06/2025 11:45", "status": "On Hold (Other)"},
-                {"request_id": 42575, "subject": "S - Application - Kastle - Change Password", "priority": "P1", "category": "S - Application", "technician": "Jawahr Alotibie", "aging_days": 33, "created_time": "08/12/2025 16:01", "status": "Cancelled"}
-            ]
-        };
-
-        // Chart configurations
-        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        Chart.defaults.color = '#2c3e50';
-
-        // Priority Distribution Chart
-        const priorityCtx = document.getElementById('priorityChart').getContext('2d');
-        new Chart(priorityCtx, {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(dashboardData.priority_distribution),
-                datasets: [{
-                    data: Object.values(dashboardData.priority_distribution),
-                    backgroundColor: ['#e74c3c', '#f39c12', '#3498db', '#27ae60', '#95a5a6'],
-                    borderColor: '#ffffff',
-                    borderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Request Type Chart
-        const requestTypeCtx = document.getElementById('requestTypeChart').getContext('2d');
-        new Chart(requestTypeCtx, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(dashboardData.request_types),
-                datasets: [{
-                    data: Object.values(dashboardData.request_types),
-                    backgroundColor: ['#e74c3c', '#3498db'],
-                    borderColor: '#ffffff',
-                    borderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Category Volume Chart
-        const categoryCtx = document.getElementById('categoryVolumeChart').getContext('2d');
-        new Chart(categoryCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(dashboardData.categories),
-                datasets: [{
-                    label: 'Tickets',
-                    data: Object.values(dashboardData.categories),
-                    backgroundColor: '#3498db',
-                    borderColor: '#2980b9',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-
-        // Department Chart
-        const departmentCtx = document.getElementById('departmentChart').getContext('2d');
-        new Chart(departmentCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(dashboardData.departments),
-                datasets: [{
-                    label: 'Tickets',
-                    data: Object.values(dashboardData.departments),
-                    backgroundColor: '#27ae60',
-                    borderColor: '#229954',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-
-        // SLA by Priority Chart
-        const slaPriorityCtx = document.getElementById('slaByPriorityChart').getContext('2d');
-        new Chart(slaPriorityCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(dashboardData.sla_by_priority),
-                datasets: [{
-                    label: 'SLA Compliance %',
-                    data: Object.values(dashboardData.sla_by_priority).map(item => item.compliance_rate),
-                    backgroundColor: function(context) {
-                        const value = context.parsed.y;
-                        if (value >= 90) return '#27ae60';
-                        if (value >= 70) return '#f39c12';
-                        return '#e74c3c';
-                    },
-                    borderColor: '#2c3e50',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Resolution Time Chart
-        const resolutionCtx = document.getElementById('resolutionTimeChart').getContext('2d');
-        new Chart(resolutionCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(dashboardData.resolution_times),
-                datasets: [{
-                    label: 'Avg Hours',
-                    data: Object.values(dashboardData.resolution_times),
-                    backgroundColor: function(context) {
-                        const value = context.parsed.y;
-                        if (value >= 100) return '#e74c3c';
-                        if (value >= 50) return '#f39c12';
-                        return '#27ae60';
-                    },
-                    borderColor: '#2c3e50',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-
-        // SLA by Category Chart
-        const slaCategoryCtx = document.getElementById('slaByCategoryChart').getContext('2d');
-        const topCategories = Object.entries(dashboardData.sla_by_category)
-            .sort((a, b) => b[1].compliance_rate - a[1].compliance_rate);
         
-        new Chart(slaCategoryCtx, {
-            type: 'bar',
-            data: {
-                labels: topCategories.map(item => item[0]),
-                datasets: [{
-                    label: 'SLA Compliance %',
-                    data: topCategories.map(item => item[1].compliance_rate),
-                    backgroundColor: function(context) {
-                        const value = context.parsed.y;
-                        if (value >= 90) return '#27ae60';
-                        if (value >= 70) return '#f39c12';
-                        return '#e74c3c';
-                    },
-                    borderColor: '#2c3e50',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                plugins: {
-                    legend: { display: false }
+        <!-- Task Management Dashboard Section -->
+        <div class="section-title">
+            <h2>Task Management Dashboard</h2>
+        </div>
+
+        <div class="kpi-snapshot">
+            <h2>📋 Task Management — KPI Snapshot</h2>
+            <table class="kpi-table">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Current</th>
+                        <th>Status</th>
+                        <th>Action Needed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>📝 <strong>Total Tasks</strong></td>
+                        <td>10 active tasks</td>
+                        <td>✅ Good</td>
+                        <td>Continue monitoring progress</td>
+                    </tr>
+                    <tr>
+                        <td>✅ <strong>Completion Rate</strong></td>
+                        <td>10% completed</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Accelerate task execution</td>
+                    </tr>
+                    <tr>
+                        <td>⏰ <strong>On Schedule</strong></td>
+                        <td>80% on track</td>
+                        <td>✅ Good</td>
+                        <td>Monitor overdue items</td>
+                    </tr>
+                    <tr>
+                        <td>🔴 <strong>Priority Tasks</strong></td>
+                        <td>1 Important</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Focus on Monthly Exec report</td>
+                    </tr>
+                    <tr>
+                        <td>📅 <strong>Upcoming Due</strong></td>
+                        <td>2 due today</td>
+                        <td>⚠️ Needs Attention</td>
+                        <td>Complete daily tasks</td>
+                    </tr>
+                    <tr>
+                        <td>🎯 <strong>Department Coverage</strong></td>
+                        <td>Cross-functional</td>
+                        <td>✅ Good</td>
+                        <td>Maintain coordination</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <h3>Total Tasks</h3>
+                <div class="kpi-value info">10</div>
+                <div class="kpi-subtitle">1 Completed • 9 Active</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Completion Rate</h3>
+                <div class="kpi-value warning">10%</div>
+                <div class="kpi-subtitle">1 of 10 tasks completed</div>
+            </div>
+            <div class="kpi-card">
+                <h3>On Schedule</h3>
+                <div class="kpi-value good">80%</div>
+                <div class="kpi-subtitle">8 tasks on track</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Average Duration</h3>
+                <div class="kpi-value info">8.5</div>
+                <div class="kpi-subtitle">days per task</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Priority Distribution</h3>
+                <div class="kpi-value warning">1</div>
+                <div class="kpi-subtitle">Important task</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Due Today</h3>
+                <div class="kpi-value critical">2</div>
+                <div class="kpi-subtitle">tasks need attention</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <h3>Task Status Distribution</h3>
+                <div class="chart-wrapper">
+                    <canvas id="taskStatusChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>Priority Breakdown</h3>
+                <div class="chart-wrapper">
+                    <canvas id="taskPriorityChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>Bucket Distribution</h3>
+                <div class="chart-wrapper">
+                    <canvas id="taskBucketChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>Task Timeline</h3>
+                <div class="chart-wrapper">
+                    <canvas id="taskTimelineChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container wide-chart">
+                <h3>Task Completion Progress</h3>
+                <div class="chart-wrapper">
+                    <canvas id="taskProgressChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3>Active Tasks - Detailed View</h3>
+            </div>
+            <div class="table-content">
+                <table id="activeTasksTable">
+                    <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th>Assigned To</th>
+                            <th>Priority</th>
+                            <th>Bucket</th>
+                            <th>Start Date</th>
+                            <th>Due Date</th>
+                            <th>Duration</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activeTasksBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            // Comprehensive dashboard data from JSON
+            const dashboardData = {
+                totalTickets: 728,
+                aging_buckets: {
+                    "0-2 days": {"count": 0},
+                    "3-7 days": {"count": 0},
+                    "8-14 days": {"count": 3},
+                    "15-30 days": {"count": 9},
+                    "31-60 days": {"count": 9},
+                    ">60 days": {"count": 0}
                 },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Detailed Technician Chart
-        const techDetailCtx = document.getElementById('technicianDetailChart').getContext('2d');
-        const topTechs = Object.entries(dashboardData.technicians)
-            .sort((a, b) => b[1].total_tickets - a[1].total_tickets)
-            .slice(0, 10);
-
-        new Chart(techDetailCtx, {
-            type: 'bar',
-            data: {
-                labels: topTechs.map(tech => tech[0].split(' ')[0] + ' ' + tech[0].split(' ')[1]),
-                datasets: [{
-                    label: 'Total Tickets',
-                    data: topTechs.map(tech => tech[1].total_tickets),
-                    backgroundColor: '#3498db',
-                    borderColor: '#2980b9',
-                    borderWidth: 2,
-                    yAxisID: 'y'
-                }, {
-                    label: 'Resolution Rate %',
-                    data: topTechs.map(tech => tech[1].resolution_rate),
-                    type: 'line',
-                    borderColor: '#e74c3c',
-                    backgroundColor: '#e74c3c',
-                    borderWidth: 3,
-                    fill: false,
-                    yAxisID: 'y1'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        position: 'left'
-                    },
-                    y1: {
-                        beginAtZero: true,
-                        position: 'right',
-                        min: 80,
-                        max: 100,
-                        grid: {
-                            drawOnChartArea: false
-                        },
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Team Workload Chart
-        const teamCtx = document.getElementById('teamWorkloadChart').getContext('2d');
-        const teamEntries = Object.entries(dashboardData.teams);
-
-        new Chart(teamCtx, {
-            type: 'bar',
-            data: {
-                labels: teamEntries.map(team => team[0]),
-                datasets: [{
-                    label: 'Closed',
-                    data: teamEntries.map(team => team[1].closed_tickets),
-                    backgroundColor: '#27ae60',
-                    borderColor: '#229954',
-                    borderWidth: 2
-                }, {
-                    label: 'Open',
-                    data: teamEntries.map(team => team[1].open_tickets),
-                    backgroundColor: '#f39c12',
-                    borderColor: '#e67e22',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { stacked: true },
-                    y: { stacked: true, beginAtZero: true }
-                }
-            }
-        });
-
-        // Top Performers Chart
-        const topPerfCtx = document.getElementById('topPerformersChart').getContext('2d');
-        const topPerformers = Object.entries(dashboardData.technicians)
-            .filter(tech => tech[1].total_tickets >= 10)
-            .sort((a, b) => b[1].resolution_rate - a[1].resolution_rate)
-            .slice(0, 8);
-
-        new Chart(topPerfCtx, {
-            type: 'bar',
-            data: {
-                labels: topPerformers.map(tech => tech[0].split(' ')[0]),
-                datasets: [{
-                    label: 'Resolution Rate %',
-                    data: topPerformers.map(tech => tech[1].resolution_rate),
-                    backgroundColor: '#27ae60',
-                    borderColor: '#229954',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
+                priority_distribution: {
+                    "P1": 7,
+                    "P2": 34,
+                    "P3": 425,
+                    "P4": 247,
+                    "Not Assigned": 15
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 80,
-                        max: 100,
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Aging Distribution Chart
-        const agingCtx = document.getElementById('agingChart').getContext('2d');
-        new Chart(agingCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(dashboardData.aging_buckets),
-                datasets: [{
-                    label: 'Open Tickets',
-                    data: Object.values(dashboardData.aging_buckets).map(bucket => bucket.count),
-                    backgroundColor: ['#27ae60', '#2ecc71', '#f39c12', '#e67e22', '#e74c3c', '#c0392b'],
-                    borderColor: ['#229954', '#27ae60', '#d68910', '#dc7633', '#cb4335', '#a93226'],
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
+                request_types: {
+                    "Incidents": 409,
+                    "Service Requests": 319
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-
-        // Aging vs Priority Analysis
-        const agingPriorityCtx = document.getElementById('agingPriorityChart').getContext('2d');
-        
-        // Group aging tickets by priority
-        const agingByPriority = {};
-        dashboardData.aging_tickets.forEach(ticket => {
-            if (!agingByPriority[ticket.priority]) {
-                agingByPriority[ticket.priority] = [];
-            }
-            agingByPriority[ticket.priority].push(ticket.aging_days);
-        });
-
-        const agingPriorityData = Object.keys(agingByPriority).map(priority => {
-            const days = agingByPriority[priority];
-            return {
-                priority: priority,
-                avgAging: days.reduce((a, b) => a + b, 0) / days.length,
-                count: days.length
+                categories: {
+                    "IT Requests": 226,
+                    "Database": 99,
+                    "General": 74,
+                    "S - Security": 56,
+                    "S - Network": 45
+                },
+                departments: {
+                    "IT": 150,
+                    "Customer Care": 84,
+                    "Security": 68,
+                    "Collection": 42,
+                    "Finance": 22
+                },
+                sla_by_priority: {
+                    "P1": {"compliance_rate": 28.6, "total": 7, "met": 2, "missed": 5},
+                    "P2": {"compliance_rate": 17.6, "total": 34, "met": 6, "missed": 28},
+                    "P3": {"compliance_rate": 82.6, "total": 425, "met": 351, "missed": 74},
+                    "P4": {"compliance_rate": 95.1, "total": 247, "met": 235, "missed": 12},
+                    "Not Assigned": {"compliance_rate": 100.0, "total": 15, "met": 15, "missed": 0}
+                },
+                resolution_times: {
+                    "P1": 219.8,
+                    "P2": 98.4,
+                    "P3": 35.4,
+                    "P4": 62.0,
+                    "Not Assigned": 472.4
+                },
+                sla_by_category: {
+                    "Database": {"compliance_rate": 98.0, "total": 99},
+                    "S - Hardware": {"compliance_rate": 100.0, "total": 16},
+                    "S - Email": {"compliance_rate": 100.0, "total": 28},
+                    "IT requests": {"compliance_rate": 85.4, "total": 226},
+                    "General": {"compliance_rate": 47.3, "total": 74},
+                    "S - Security": {"compliance_rate": 78.6, "total": 56},
+                    "S - Network": {"compliance_rate": 93.3, "total": 45},
+                    "Applications": {"compliance_rate": 83.3, "total": 18}
+                },
+                technicians: {
+                    "Muhammad Nabeel Fayyaz [SAT]": {"total_tickets": 222, "open_tickets": 4, "closed_tickets": 218, "resolution_rate": 98.2, "priority_breakdown": {"P4": 83, "P3": 138, "P1": 1}},
+                    "Devendra Parmar": {"total_tickets": 118, "open_tickets": 1, "closed_tickets": 117, "resolution_rate": 99.2, "priority_breakdown": {"P3": 97, "P4": 20, "P2": 1}},
+                    "Mohammed Habeebuddin": {"total_tickets": 88, "open_tickets": 2, "closed_tickets": 86, "resolution_rate": 97.7, "priority_breakdown": {"P4": 83, "Not Assigned": 3, "P3": 2}},
+                    "Tony Joseph [SAT]": {"total_tickets": 73, "open_tickets": 1, "closed_tickets": 72, "resolution_rate": 98.6, "priority_breakdown": {"P3": 65, "P2": 1, "P4": 7}},
+                    "Yasir Zeeshan Akbar Ali": {"total_tickets": 57, "open_tickets": 2, "closed_tickets": 55, "resolution_rate": 96.5, "priority_breakdown": {"P3": 49, "P4": 7, "P2": 1}},
+                    "Jawahr Alotibie": {"total_tickets": 45, "open_tickets": 4, "closed_tickets": 41, "resolution_rate": 91.1, "priority_breakdown": {"P4": 19, "P1": 6, "P3": 10, "Not Assigned": 10}},
+                    "Mohammed Adnan Mohammed": {"total_tickets": 35, "open_tickets": 0, "closed_tickets": 35, "resolution_rate": 100.0, "priority_breakdown": {"P2": 30, "P3": 5}},
+                    "Ahmed Gaafer Mohamed Mostafa [SAT]": {"total_tickets": 24, "open_tickets": 0, "closed_tickets": 24, "resolution_rate": 100.0, "priority_breakdown": {"P3": 23, "P4": 1}},
+                    "Jaffar Ali Rahimansha [SAT]": {"total_tickets": 20, "open_tickets": 1, "closed_tickets": 19, "resolution_rate": 95.0, "priority_breakdown": {"P3": 18, "P4": 2}},
+                    "Syed Azam Saleem": {"total_tickets": 19, "open_tickets": 3, "closed_tickets": 16, "resolution_rate": 84.2, "priority_breakdown": {"P3": 6, "P4": 13}}
+                },
+                teams: {
+                    "Technical Service Desk": {"total_tickets": 209, "open_tickets": 4, "closed_tickets": 205},
+                    "System Services": {"total_tickets": 112, "open_tickets": 2, "closed_tickets": 110},
+                    "Network Services": {"total_tickets": 111, "open_tickets": 3, "closed_tickets": 108},
+                    "Database Team": {"total_tickets": 107, "open_tickets": 5, "closed_tickets": 102},
+                    "IT Team": {"total_tickets": 71, "open_tickets": 1, "closed_tickets": 70},
+                    "Applications Team": {"total_tickets": 53, "open_tickets": 5, "closed_tickets": 48}
+                },
+                aging_tickets: [
+                    {"request_id": 42932, "subject": "CCTV - Ground Floor", "priority": "P3", "category": "Not Assigned", "technician": "Yasir Zeeshan Akbar Ali", "aging_days": 14, "created_time": "08/31/2025 09:28", "status": "On Hold (Other)"},
+                    {"request_id": 42935, "subject": "S - Application - Amlock - Access request", "priority": "P3", "category": "S - Application", "technician": "Yazan Almasri", "aging_days": 14, "created_time": "08/31/2025 10:55", "status": "In Progress"},
+                    {"request_id": 42945, "subject": "SECTONA PAM", "priority": "P3", "category": "Not Assigned", "technician": "Yasir Zeeshan Akbar Ali", "aging_days": 14, "created_time": "08/31/2025 15:39", "status": "On Hold (Other)"},
+                    {"request_id": 42675, "subject": "S - IAM - User Management - Account Creation", "priority": "P4", "category": "S - IAM", "technician": "Jawahr Alotibie", "aging_days": 28, "created_time": "08/17/2025 10:43", "status": "In Progress"},
+                    {"request_id": 42676, "subject": "New Employee - Cyber Security", "priority": "P4", "category": "Not Assigned", "technician": "Muhammad Nabeel Fayyaz [SAT]", "aging_days": 28, "created_time": "08/17/2025 11:24", "status": "On Hold (New Joinee)"},
+                    {"request_id": 42727, "subject": "Request for New LCDPD Tableau Sheet", "priority": "P3", "category": "Database", "technician": "Syed Azam Saleem", "aging_days": 26, "created_time": "08/19/2025 16:40", "status": "On Hold (User Response)"},
+                    {"request_id": 42735, "subject": "S - Application - Orion - Access Request", "priority": "P4", "category": "S - Application", "technician": "Yazan Almasri", "aging_days": 25, "created_time": "08/20/2025 10:25", "status": "In Progress"},
+                    {"request_id": 42895, "subject": "Pending Requests", "priority": "P3", "category": "Not Assigned", "technician": "Jawahr Alotibie", "aging_days": 18, "created_time": "08/27/2025 11:01", "status": "In Progress"},
+                    {"request_id": 42302, "subject": "S - Hardware - Telephone - Others", "priority": "P4", "category": "S - Hardware", "technician": "Muhammad Nabeel Fayyaz [SAT]", "aging_days": 41, "created_time": "08/04/2025 17:17", "status": "Cancelled"},
+                    {"request_id": 42347, "subject": "S - Software - Apps - Microsoft Office", "priority": "P3", "category": "S - Software", "technician": "Muhammad Nabeel Fayyaz [SAT]", "aging_days": 40, "created_time": "08/05/2025 16:16", "status": "Cancelled"},
+                    {"request_id": 42424, "subject": "RE: support", "priority": "P3", "category": "IT requests", "technician": "Jawahr Alotibie", "aging_days": 39, "created_time": "08/06/2025 11:45", "status": "On Hold (Other)"},
+                    {"request_id": 42575, "subject": "S - Application - Kastle - Change Password", "priority": "P1", "category": "S - Application", "technician": "Jawahr Alotibie", "aging_days": 33, "created_time": "08/12/2025 16:01", "status": "Cancelled"}
+                ]
             };
-        });
 
-        new Chart(agingPriorityCtx, {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Tickets',
-                    data: agingPriorityData.map(item => ({
-                        x: item.avgAging,
-                        y: item.count
-                    })),
-                    backgroundColor: function(context) {
-                        const priority = agingPriorityData[context.dataIndex].priority;
-                        if (priority === 'P1') return '#e74c3c';
-                        if (priority === 'P2') return '#f39c12';
-                        if (priority === 'P3') return '#3498db';
-                        return '#27ae60';
-                    },
-                    borderColor: '#2c3e50',
-                    borderWidth: 2,
-                    pointRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Average Aging Days'
+            // Chart configurations
+            Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            Chart.defaults.color = '#2c3e50';
+
+            // Priority Distribution Chart
+            const priorityCtx = document.getElementById('priorityChart').getContext('2d');
+            new Chart(priorityCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(dashboardData.priority_distribution),
+                    datasets: [{
+                        data: Object.values(dashboardData.priority_distribution),
+                        backgroundColor: ['#e74c3c', '#f39c12', '#3498db', '#27ae60', '#95a5a6'],
+                        borderColor: '#ffffff',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
                         }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Number of Tickets'
-                        },
-                        beginAtZero: true
                     }
                 }
-            }
-        });
+            });
 
-        // Populate Tables
-        function populateAgingTable() {
-            const tbody = document.getElementById('agingTicketsBody');
-            
-            dashboardData.aging_tickets.forEach(ticket => {
-                const row = document.createElement('tr');
-                
-                if (ticket.aging_days >= 30) {
-                    row.classList.add('aging-critical');
-                } else if (ticket.aging_days >= 14) {
-                    row.classList.add('aging-warning');
+            // Request Type Chart
+            const requestTypeCtx = document.getElementById('requestTypeChart').getContext('2d');
+            new Chart(requestTypeCtx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(dashboardData.request_types),
+                    datasets: [{
+                        data: Object.values(dashboardData.request_types),
+                        backgroundColor: ['#e74c3c', '#3498db'],
+                        borderColor: '#ffffff',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
                 }
-                
-                row.innerHTML = `
-                    <td><strong>#${ticket.request_id}</strong></td>
-                    <td title="${ticket.subject}">${ticket.subject.length > 40 ? ticket.subject.substring(0, 40) + '...' : ticket.subject}</td>
-                    <td><span class="priority-${ticket.priority.toLowerCase()}">${ticket.priority}</span></td>
-                    <td>${ticket.category}</td>
-                    <td>${ticket.technician.split(' ')[0]} ${ticket.technician.split(' ')[1] || ''}</td>
-                    <td><strong>${ticket.aging_days} days</strong></td>
-                    <td><span class="status-badge status-${ticket.status.includes('Progress') ? 'progress' : ticket.status.includes('Hold') ? 'hold' : 'cancelled'}">${ticket.status}</span></td>
-                    <td>${ticket.created_time}</td>
-                `;
-                
-                tbody.appendChild(row);
             });
-        }
 
-        function populateTechnicianTable() {
-            const tbody = document.getElementById('technicianPerformanceBody');
+            // Category Volume Chart
+            const categoryCtx = document.getElementById('categoryVolumeChart').getContext('2d');
+            new Chart(categoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dashboardData.categories),
+                    datasets: [{
+                        label: 'Tickets',
+                        data: Object.values(dashboardData.categories),
+                        backgroundColor: '#3498db',
+                        borderColor: '#2980b9',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+            new Chart(departmentCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dashboardData.departments),
+                    datasets: [{
+                        label: 'Tickets',
+                        data: Object.values(dashboardData.departments),
+                        backgroundColor: '#27ae60',
+                        borderColor: '#229954',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // SLA by Priority Chart
+            const slaPriorityCtx = document.getElementById('slaByPriorityChart').getContext('2d');
+            new Chart(slaPriorityCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dashboardData.sla_by_priority),
+                    datasets: [{
+                        label: 'SLA Compliance %',
+                        data: Object.values(dashboardData.sla_by_priority).map(item => item.compliance_rate),
+                        backgroundColor: function(context) {
+                            const value = context.parsed.y;
+                            if (value >= 90) return '#27ae60';
+                            if (value >= 70) return '#f39c12';
+                            return '#e74c3c';
+                        },
+                        borderColor: '#2c3e50',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Resolution Time Chart
+            const resolutionCtx = document.getElementById('resolutionTimeChart').getContext('2d');
+            new Chart(resolutionCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dashboardData.resolution_times),
+                    datasets: [{
+                        label: 'Avg Hours',
+                        data: Object.values(dashboardData.resolution_times),
+                        backgroundColor: function(context) {
+                            const value = context.parsed.y;
+                            if (value >= 100) return '#e74c3c';
+                            if (value >= 50) return '#f39c12';
+                            return '#27ae60';
+                        },
+                        borderColor: '#2c3e50',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // SLA by Category Chart
+            const slaCategoryCtx = document.getElementById('slaByCategoryChart').getContext('2d');
+            const topCategories = Object.entries(dashboardData.sla_by_category)
+                .sort((a, b) => b[1].compliance_rate - a[1].compliance_rate);
             
-            Object.entries(dashboardData.technicians).forEach(([name, data]) => {
-                const row = document.createElement('tr');
-                
-                const priorities = data.priority_breakdown;
-                
-                row.innerHTML = `
-                    <td>${name.split(' ')[0]} ${name.split(' ')[1] || ''}</td>
-                    <td><strong>${data.total_tickets}</strong></td>
-                    <td>${data.open_tickets}</td>
-                    <td>${data.closed_tickets}</td>
-                    <td><strong>${data.resolution_rate}%</strong></td>
-                    <td>${priorities.P1 || 0}</td>
-                    <td>${priorities.P2 || 0}</td>
-                    <td>${priorities.P3 || 0}</td>
-                    <td>${priorities.P4 || 0}</td>
-                `;
-                
-                tbody.appendChild(row);
+            new Chart(slaCategoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: topCategories.map(item => item[0]),
+                    datasets: [{
+                        label: 'SLA Compliance %',
+                        data: topCategories.map(item => item[1].compliance_rate),
+                        backgroundColor: function(context) {
+                            const value = context.parsed.y;
+                            if (value >= 90) return '#27ae60';
+                            if (value >= 70) return '#f39c12';
+                            return '#e74c3c';
+                        },
+                        borderColor: '#2c3e50',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
             });
-        }
 
-        // Initialize tables
-        populateAgingTable();
-        populateTechnicianTable();
-    </script>
+            // Detailed Technician Chart
+            const techDetailCtx = document.getElementById('technicianDetailChart').getContext('2d');
+            const topTechs = Object.entries(dashboardData.technicians)
+                .sort((a, b) => b[1].total_tickets - a[1].total_tickets)
+                .slice(0, 10);
+
+            new Chart(techDetailCtx, {
+                type: 'bar',
+                data: {
+                    labels: topTechs.map(tech => tech[0].split(' ')[0] + ' ' + tech[0].split(' ')[1]),
+                    datasets: [{
+                        label: 'Total Tickets',
+                        data: topTechs.map(tech => tech[1].total_tickets),
+                        backgroundColor: '#3498db',
+                        borderColor: '#2980b9',
+                        borderWidth: 2,
+                        yAxisID: 'y'
+                    }, {
+                        label: 'Resolution Rate %',
+                        data: topTechs.map(tech => tech[1].resolution_rate),
+                        type: 'line',
+                        borderColor: '#e74c3c',
+                        backgroundColor: '#e74c3c',
+                        borderWidth: 3,
+                        fill: false,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            position: 'left'
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            min: 80,
+                            max: 100,
+                            grid: {
+                                drawOnChartArea: false
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Team Workload Chart
+            const teamCtx = document.getElementById('teamWorkloadChart').getContext('2d');
+            const teamEntries = Object.entries(dashboardData.teams);
+
+            new Chart(teamCtx, {
+                type: 'bar',
+                data: {
+                    labels: teamEntries.map(team => team[0]),
+                    datasets: [{
+                        label: 'Closed',
+                        data: teamEntries.map(team => team[1].closed_tickets),
+                        backgroundColor: '#27ae60',
+                        borderColor: '#229954',
+                        borderWidth: 2
+                    }, {
+                        label: 'Open',
+                        data: teamEntries.map(team => team[1].open_tickets),
+                        backgroundColor: '#f39c12',
+                        borderColor: '#e67e22',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Top Performers Chart
+            const topPerfCtx = document.getElementById('topPerformersChart').getContext('2d');
+            const topPerformers = Object.entries(dashboardData.technicians)
+                .filter(tech => tech[1].total_tickets >= 10)
+                .sort((a, b) => b[1].resolution_rate - a[1].resolution_rate)
+                .slice(0, 8);
+
+            new Chart(topPerfCtx, {
+                type: 'bar',
+                data: {
+                    labels: topPerformers.map(tech => tech[0].split(' ')[0]),
+                    datasets: [{
+                        label: 'Resolution Rate %',
+                        data: topPerformers.map(tech => tech[1].resolution_rate),
+                        backgroundColor: '#27ae60',
+                        borderColor: '#229954',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 80,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Aging Distribution Chart
+            const agingCtx = document.getElementById('agingChart').getContext('2d');
+            new Chart(agingCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dashboardData.aging_buckets),
+                    datasets: [{
+                        label: 'Open Tickets',
+                        data: Object.values(dashboardData.aging_buckets).map(bucket => bucket.count),
+                        backgroundColor: ['#27ae60', '#2ecc71', '#f39c12', '#e67e22', '#e74c3c', '#c0392b'],
+                        borderColor: ['#229954', '#27ae60', '#d68910', '#dc7633', '#cb4335', '#a93226'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+
+            // Aging vs Priority Analysis
+            const agingPriorityCtx = document.getElementById('agingPriorityChart').getContext('2d');
+            
+            // Group aging tickets by priority
+            const agingByPriority = {};
+            dashboardData.aging_tickets.forEach(ticket => {
+                if (!agingByPriority[ticket.priority]) {
+                    agingByPriority[ticket.priority] = [];
+                }
+                agingByPriority[ticket.priority].push(ticket.aging_days);
+            });
+
+            const agingPriorityData = Object.keys(agingByPriority).map(priority => {
+                const days = agingByPriority[priority];
+                return {
+                    priority: priority,
+                    avgAging: days.reduce((a, b) => a + b, 0) / days.length,
+                    count: days.length
+                };
+            });
+
+            new Chart(agingPriorityCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Tickets',
+                        data: agingPriorityData.map(item => ({
+                            x: item.avgAging,
+                            y: item.count
+                        })),
+                        backgroundColor: function(context) {
+                            const priority = agingPriorityData[context.dataIndex].priority;
+                            if (priority === 'P1') return '#e74c3c';
+                            if (priority === 'P2') return '#f39c12';
+                            if (priority === 'P3') return '#3498db';
+                            return '#27ae60';
+                        },
+                        borderColor: '#2c3e50',
+                        borderWidth: 2,
+                        pointRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Average Aging Days'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Tickets'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Populate Tables
+            function populateAgingTable() {
+                const tbody = document.getElementById('agingTicketsBody');
+                
+                dashboardData.aging_tickets.forEach(ticket => {
+                    const row = document.createElement('tr');
+                    
+                    if (ticket.aging_days >= 30) {
+                        row.classList.add('aging-critical');
+                    } else if (ticket.aging_days >= 14) {
+                        row.classList.add('aging-warning');
+                    }
+                    
+                    row.innerHTML = `
+                        <td><strong>#${ticket.request_id}</strong></td>
+                        <td title="${ticket.subject}">${ticket.subject.length > 40 ? ticket.subject.substring(0, 40) + '...' : ticket.subject}</td>
+                        <td><span class="priority-${ticket.priority.toLowerCase()}">${ticket.priority}</span></td>
+                        <td>${ticket.category}</td>
+                        <td>${ticket.technician.split(' ')[0]} ${ticket.technician.split(' ')[1] || ''}</td>
+                        <td><strong>${ticket.aging_days} days</strong></td>
+                        <td><span class="status-badge status-${ticket.status.includes('Progress') ? 'progress' : ticket.status.includes('Hold') ? 'hold' : 'cancelled'}">${ticket.status}</span></td>
+                        <td>${ticket.created_time}</td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            }
+
+            function populateTechnicianTable() {
+                const tbody = document.getElementById('technicianPerformanceBody');
+                
+                Object.entries(dashboardData.technicians).forEach(([name, data]) => {
+                    const row = document.createElement('tr');
+                    
+                    const priorities = data.priority_breakdown;
+                    
+                    row.innerHTML = `
+                        <td>${name.split(' ')[0]} ${name.split(' ')[1] || ''}</td>
+                        <td><strong>${data.total_tickets}</strong></td>
+                        <td>${data.open_tickets}</td>
+                        <td>${data.closed_tickets}</td>
+                        <td><strong>${data.resolution_rate}%</strong></td>
+                        <td>${priorities.P1 || 0}</td>
+                        <td>${priorities.P2 || 0}</td>
+                        <td>${priorities.P3 || 0}</td>
+                        <td>${priorities.P4 || 0}</td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            }
+
+            // Task Management Data
+            const taskData = {
+                tasks: [
+                    {
+                        id: 1,
+                        name: "Create new Dashboard",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-15",
+                        dueDate: "2025-09-20",
+                        duration: 5,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 2,
+                        name: "Share weekly report",
+                        assignedTo: "Network Services",
+                        priority: "Medium",
+                        bucket: "Weekly",
+                        startDate: "2025-09-15",
+                        dueDate: "2025-09-15",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 3,
+                        name: "Monthly Exec report",
+                        assignedTo: "Imtiyaz Mulla",
+                        priority: "Important",
+                        bucket: "Monthly",
+                        startDate: "2025-09-19",
+                        dueDate: "2025-10-31",
+                        duration: 31,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 4,
+                        name: "Identify and categorize all recurring tasks",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-15",
+                        dueDate: "2025-09-15",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 5,
+                        name: "Create a centralized task tracking system",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-15",
+                        dueDate: "2025-09-15",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 6,
+                        name: "Input all recurring tasks into the tracking system",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-16",
+                        dueDate: "2025-09-16",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 7,
+                        name: "Integrate standup meeting tracking from email and Teams",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-16",
+                        dueDate: "2025-09-16",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 8,
+                        name: "Develop a dashboard for real-time task and meeting tracking",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-17",
+                        dueDate: "2025-09-17",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 9,
+                        name: "Train team members on using the task tracking system",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Unplanned",
+                        startDate: "2025-09-18",
+                        dueDate: "2025-09-18",
+                        duration: 1,
+                        progress: 0,
+                        status: "Not Started"
+                    },
+                    {
+                        id: 10,
+                        name: "Monitor and review task completion regularly",
+                        assignedTo: "Unassigned",
+                        priority: "Medium",
+                        bucket: "Completed",
+                        startDate: "2025-09-19",
+                        dueDate: "2025-09-19",
+                        duration: 1,
+                        progress: 100,
+                        status: "Completed"
+                    }
+                ]
+            };
+
+            // Task Management Charts
+            function createTaskCharts() {
+                // Task Status Chart
+                const taskStatusCtx = document.getElementById('taskStatusChart').getContext('2d');
+                const statusCounts = taskData.tasks.reduce((acc, task) => {
+                    acc[task.status] = (acc[task.status] || 0) + 1;
+                    return acc;
+                }, {});
+
+                new Chart(taskStatusCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(statusCounts),
+                        datasets: [{
+                            data: Object.values(statusCounts),
+                            backgroundColor: ['#e74c3c', '#3498db', '#27ae60'],
+                            borderColor: '#ffffff',
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+
+                // Task Priority Chart
+                const taskPriorityCtx = document.getElementById('taskPriorityChart').getContext('2d');
+                const priorityCounts = taskData.tasks.reduce((acc, task) => {
+                    acc[task.priority] = (acc[task.priority] || 0) + 1;
+                    return acc;
+                }, {});
+
+                new Chart(taskPriorityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(priorityCounts),
+                        datasets: [{
+                            data: Object.values(priorityCounts),
+                            backgroundColor: ['#f39c12', '#3498db'],
+                            borderColor: '#ffffff',
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+
+                // Task Bucket Chart
+                const taskBucketCtx = document.getElementById('taskBucketChart').getContext('2d');
+                const bucketCounts = taskData.tasks.reduce((acc, task) => {
+                    acc[task.bucket] = (acc[task.bucket] || 0) + 1;
+                    return acc;
+                }, {});
+
+                new Chart(taskBucketCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(bucketCounts),
+                        datasets: [{
+                            label: 'Tasks',
+                            data: Object.values(bucketCounts),
+                            backgroundColor: ['#95a5a6', '#27ae60', '#1976d2', '#f57c00'],
+                            borderColor: '#2c3e50',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+
+                // Task Timeline Chart
+                const taskTimelineCtx = document.getElementById('taskTimelineChart').getContext('2d');
+                const dueDateCounts = taskData.tasks.reduce((acc, task) => {
+                    const date = new Date(task.dueDate).toLocaleDateString();
+                    acc[date] = (acc[date] || 0) + 1;
+                    return acc;
+                }, {});
+
+                new Chart(taskTimelineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(dueDateCounts),
+                        datasets: [{
+                            label: 'Tasks Due',
+                            data: Object.values(dueDateCounts),
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+
+                // Task Progress Chart
+                const taskProgressCtx = document.getElementById('taskProgressChart').getContext('2d');
+                new Chart(taskProgressCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: taskData.tasks.map(task => task.name.substring(0, 20) + '...'),
+                        datasets: [{
+                            label: 'Progress %',
+                            data: taskData.tasks.map(task => task.progress),
+                            backgroundColor: function(context) {
+                                const value = context.parsed.y;
+                                if (value === 100) return '#27ae60';
+                                if (value > 0) return '#3498db';
+                                return '#e74c3c';
+                            },
+                            borderColor: '#2c3e50',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { callback: function(value) { return value + '%'; } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Populate Active Tasks Table
+            function populateActiveTasksTable() {
+                const tbody = document.getElementById('activeTasksBody');
+                taskData.tasks.forEach(task => {
+                    const row = document.createElement('tr');
+                    const today = new Date().toISOString().split('T')[0];
+                    const isOverdue = new Date(task.dueDate) < new Date(today);
+
+                    if (isOverdue) {
+                        row.classList.add('aging-critical');
+                    } else if (task.dueDate === today) {
+                        row.classList.add('aging-warning');
+                    }
+
+                    row.innerHTML = `
+                        <td title="${task.name}">${task.name.length > 40 ? task.name.substring(0, 40) + '...' : task.name}</td>
+                        <td>${task.assignedTo}</td>
+                        <td><span class="priority-${task.priority.toLowerCase()}">${task.priority}</span></td>
+                        <td><span class="bucket-badge bucket-${task.bucket.toLowerCase().replace(/\s+/g, '')}">${task.bucket}</span></td>
+                        <td>${task.startDate}</td>
+                        <td>${task.dueDate}</td>
+                        <td>${task.duration} day${task.duration !== 1 ? 's' : ''}</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${task.progress}%"></div>
+                            </div>
+                            ${task.progress}%
+                        </td>
+                        <td><span class="status-badge status-${task.status.toLowerCase().replace(/\s+/g, '')}">${task.status}</span></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            // Initialize tables
+            populateAgingTable();
+            populateTechnicianTable();
+            populateActiveTasksTable();
+            createTaskCharts();
+        </script>
+    </div>
 </body>
 </html>
