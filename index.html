@@ -29,16 +29,18 @@
         .header {
             text-align: center;
             margin-bottom: 25px;
-            background: white;
+            background: none;
+            box-shadow: none;
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         
         .header h1 {
             color: #2c3e50;
-            font-size: 2.2em;
-            margin-bottom: 8px;
+            font-size: 2.6em;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            margin-bottom: 0.2em;
         }
         
         .header .subtitle {
@@ -363,9 +365,92 @@
 <body>
     <div class="dashboard-container">
         <!-- Header -->
-        <div class="header">
-            <h1>Weekly IT Managed Services Dashboard</h1>
-            <div class="subtitle">Analysis Report - September 15, 2025</div>
+        <div class="header" style="background: none; box-shadow: none; margin-bottom: 0;">
+            <h1 style="font-size:2.6em; font-weight:500; letter-spacing:0.01em; margin-bottom: 0.2em;">IT Service Desk Weekly Dashboard</h1>
+        </div>
+
+        <!-- Top KPI Summary Section (4 columns) -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0; margin-bottom: 18px; background: none;">
+            <div style="flex: 1 1 180px; min-width: 180px; text-align: center; padding: 0 10px;">
+                <div style="font-size: 3.2em; font-weight: 500; color: #222; margin-bottom: 0.1em;">728</div>
+                <div style="color: #222; font-size: 1.25em; font-weight: 400;">Total Tickets</div>
+                <div style="color: #888; font-size: 1em; margin-top: 0.2em;">Current volume</div>
+            </div>
+            <div style="flex: 1 1 180px; min-width: 180px; text-align: center; padding: 0 10px;">
+                <div style="font-size: 3.2em; font-weight: 500; color: #222; margin-bottom: 0.1em;">21</div>
+                <div style="color: #222; font-size: 1.25em; font-weight: 400;">Open Tickets</div>
+                <div style="color: #888; font-size: 1em; margin-top: 0.2em;">Active workload</div>
+            </div>
+            <div style="flex: 1 1 180px; min-width: 180px; text-align: center; padding: 0 10px;">
+                <div style="font-size: 3.2em; font-weight: 500; color: #222; margin-bottom: 0.1em;">83.7%</div>
+                <div style="color: #222; font-size: 1.25em; font-weight: 400;">SLA Compliance</div>
+                <div style="color: #e74c3c; font-size: 1em; margin-top: 0.2em;">Needs attention</div>
+            </div>
+            <div style="flex: 1 1 180px; min-width: 180px; text-align: center; padding: 0 10px;">
+                <div style="font-size: 3.2em; font-weight: 500; color: #222; margin-bottom: 0.1em;">82</div>
+                <div style="color: #222; font-size: 1.25em; font-weight: 400;">Health Score</div>
+                <div style="color: #888; font-size: 1em; margin-top: 0.2em;">Out of 100</div>
+            </div>
+        </div>
+
+        <!-- KPI Mini Cards Row (4 columns) -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0; margin-bottom: 28px;">
+            <div style="flex: 1 1 220px; min-width: 220px; background: #fafbfc; border-radius: 10px; text-align: center; padding: 18px 8px; margin: 0 8px; border: 1px solid #eee;">
+                <div style="color: #e74c3c; font-weight: 600; font-size: 1.13em; margin-bottom: 0.2em;">Response Efficiency</div>
+                <div style="color: #e74c3c; font-size: 1.13em;">91.5% compliance rate</div>
+            </div>
+            <div style="flex: 1 1 220px; min-width: 220px; background: #fafbfc; border-radius: 10px; text-align: center; padding: 18px 8px; margin: 0 8px; border: 1px solid #eee;">
+                <div style="color: #e74c3c; font-weight: 600; font-size: 1.13em; margin-bottom: 0.2em;">Pending Tickets</div>
+                <div style="color: #e74c3c; font-size: 1.13em;">21 tickets open</div>
+                <div style="color: #888; font-size: 1em; margin-top: 0.2em;">6 on hold, 4 in progress, 11 stale/cancelled</div>
+            </div>
+            <div style="flex: 1 1 220px; min-width: 220px; background: #fafbfc; border-radius: 10px; text-align: center; padding: 18px 8px; margin: 0 8px; border: 1px solid #eee;">
+                <div style="color: #e74c3c; font-weight: 600; font-size: 1.13em; margin-bottom: 0.2em;">Resolution Time</div>
+                <div style="color: #e74c3c; font-size: 1.13em;">2.4-day average resolution</div>
+                <!-- <div style="color: #888; font-size: 1em; margin-top: 0.2em;">Indicates process bottleneck</div> -->
+            </div>
+            <div style="flex: 1 1 220px; min-width: 220px; background: #fafbfc; border-radius: 10px; text-align: center; padding: 18px 8px; margin: 0 8px; border: 1px solid #eee;">
+                <div style="color: #e74c3c; font-weight: 600; font-size: 1.13em; margin-bottom: 0.2em;">Health Score</div>
+                 <div style="color: #e74c3c; font-size: 1.13em;">P1 tickets only 28.6% SLA compliance, P2 tickets only 17.6% compliance</div>
+                <!-- <div style="color: #888; font-size: 1em; margin-top: 0.2em;">6 blocked, 6 awaiting vendor</div> -->
+            </div>
+        </div>
+
+        <!-- Priority Actions Section -->
+        <div style="text-align: center; margin: 40px 0 16px 0;">
+            <div style="font-size: 2em; font-weight: 500; color: #222; margin-bottom: 12px;">This Week's Priority Actions</div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 36px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="background: #e74c3c; color: #fff; border-radius: 8px; font-weight: bold; padding: 6px 16px; font-size: 1.2em;">1</span>
+                    <span style="font-size: 1.13em; color: #222;">Address aging tickets</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="background: #e74c3c; color: #fff; border-radius: 8px; font-weight: bold; padding: 6px 16px; font-size: 1.2em;">2</span>
+                    <span style="font-size: 1.13em; color: #222;">Resolve blocked tickets</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="background: #e74c3c; color: #fff; border-radius: 8px; font-weight: bold; padding: 6px 16px; font-size: 1.2em;">3</span>
+                    <span style="font-size: 1.13em; color: #222;">Implement P1/P2 priorities</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Actions Details -->
+        <!-- <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 36px; margin-bottom: 32px;">
+            <div style="flex: 1 1 220px; min-width: 220px; text-align: center;">
+                <div style="color: #e74c3c; font-size: 1em;">Focus on 31–60 day bucket</div>
+            </div>
+            <div style="flex: 1 1 220px; min-width: 220px; text-align: center;">
+                <div style="color: #e74c3c; font-size: 1em;">Review 6 tickets on hold</div>
+            </div>
+            <div style="flex: 1 1 220px; min-width: 220px; text-align: center;">
+                <div style="color: #e74c3c; font-size: 1em;">Focused response procedures</div>
+            </div>
+        </div> -->
+
+        <!-- Management Action Needed Title -->
+        <div style="text-align: center; margin: 30px 0 10px 0;">
+            <div style="font-size: 2em; font-weight: 500; color: #222;">Management Action Needed</div>
         </div>
         
         <!-- KPI Snapshot Table -->
