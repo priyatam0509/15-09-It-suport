@@ -47,6 +47,55 @@
             color: #7f8c8d;
             font-size: 1.1em;
         }
+
+        /* Toggle Switch Styles */
+        .dashboard-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .toggle-option {
+            font-size: 1.1em;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .toggle-option.active {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .toggle-option.inactive {
+            color: #7f8c8d;
+            background: #f8f9fa;
+        }
+
+        .toggle-option:hover:not(.active) {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
         
         .kpi-grid {
             display: grid;
@@ -83,6 +132,7 @@
         .kpi-value.good { color: #27ae60; }
         .kpi-value.warning { color: #f39c12; }
         .kpi-value.critical { color: #e74c3c; }
+        .kpi-value.info { color: #3498db; }
         
         .kpi-subtitle {
             color: #7f8c8d;
@@ -174,11 +224,15 @@
         .status-progress { background: #3498db; color: white; }
         .status-hold { background: #f39c12; color: white; }
         .status-cancelled { background: #95a5a6; color: white; }
+        .status-notstarted { background: #e74c3c; color: white; }
+        .status-completed { background: #27ae60; color: white; }
         
         .priority-p1 { color: #e74c3c; font-weight: bold; }
         .priority-p2 { color: #f39c12; font-weight: bold; }
         .priority-p3 { color: #3498db; }
         .priority-p4 { color: #27ae60; }
+        .priority-important { color: #e74c3c; font-weight: bold; }
+        .priority-medium { color: #f39c12; }
         
         .aging-critical { background: #ffebee; }
         .aging-warning { background: #fff3e0; }
@@ -230,6 +284,20 @@
         @media (max-width: 768px) {
             .wide-chart {
                 grid-column: span 1;
+            }
+            
+            .dashboard-toggle {
+                flex-direction: column;
+            }
+            
+            .toggle-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .toggle-option {
+                min-width: 200px;
             }
         }
         
@@ -360,13 +428,321 @@
         .highlight-row:hover {
             background: #ffeaa7 !important;
         }
+
+        /* Hide dashboard sections by default */
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        .bucket-badge {
+            padding: 3px 6px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+
+        .bucket-unplanned { background: #95a5a6; color: white; }
+        .bucket-weekly { background: #f39c12; color: white; }
+        .bucket-monthly { background: #3498db; color: white; }
+        .bucket-completed { background: #27ae60; color: white; }
+
+        /* Security Vulnerability Dashboard Styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .critical { color: #dc3545; }
+        .high { color: #fd7e14; }
+        .medium { color: #ffc107; }
+        .low { color: #6c757d; }
+        .remediated { color: #28a745; }
+        .pending { color: #dc3545; }
+
+        .severity-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .badge-critical { background-color: #dc3545; }
+        .badge-high { background-color: #fd7e14; }
+        .badge-medium { background-color: #ffc107; color: #000; }
+        .badge-low { background-color: #6c757d; }
+
+        .progress-remediated {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        /* Backup Dashboard Specific Styles */
+        .backup-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .backup-table th {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .backup-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        .backup-table tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .status-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .status-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+        }
+
+        .status-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+
+        .notes-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: border-color 0.3s ease;
+        }
+
+        .notes-input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .refresh-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .refresh-btn:hover::before {
+            left: 100%;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .timestamp {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .gauge-wrapper {
+            position: relative;
+            height: 200px;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            position: relative;
+            z-index: 1;
+        }
+
+        .success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .charts-section {
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Header -->
         <div class="header" style="background: none; box-shadow: none; margin-bottom: 0;">
-            <h1 style="font-size:2.6em; font-weight:500; letter-spacing:0.01em; margin-bottom: 0.2em;">IT Service Desk Weekly Dashboard</h1>
+            <h1 style="font-size:2.6em; font-weight:500; letter-spacing:0.01em; margin-bottom: 0.2em;">IT Service Desk Comprehensive Dashboard</h1>
         </div>
 
         <!-- Top KPI Summary Section (4 columns) -->
@@ -407,12 +783,10 @@
             <div style="flex: 1 1 220px; min-width: 220px; background: #fafbfc; border-radius: 10px; text-align: center; padding: 18px 8px; margin: 0 8px; border: 1px solid #eee;">
                 <div style="color: #e74c3c; font-weight: 600; font-size: 1.13em; margin-bottom: 0.2em;">Resolution Time</div>
                 <div style="color: #e74c3c; font-size: 1.13em;">2.4-day average resolution</div>
-                <!-- <div style="color: #888; font-size: 1em; margin-top: 0.2em;">Indicates process bottleneck</div> -->
             </div>
             <div style="flex: 1 1 220px; min-width: 220px; background: #fafbfc; border-radius: 10px; text-align: center; padding: 18px 8px; margin: 0 8px; border: 1px solid #eee;">
                 <div style="color: #e74c3c; font-weight: 600; font-size: 1.13em; margin-bottom: 0.2em;">Health Score</div>
                  <div style="color: #e74c3c; font-size: 1.13em;">P1 tickets only 28.6% SLA compliance, P2 tickets only 17.6% compliance</div>
-                <!-- <div style="color: #888; font-size: 1em; margin-top: 0.2em;">6 blocked, 6 awaiting vendor</div> -->
             </div>
         </div>
 
@@ -435,621 +809,1422 @@
             </div>
         </div>
 
-        <!-- Priority Actions Details -->
-        <!-- <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 36px; margin-bottom: 32px;">
-            <div style="flex: 1 1 220px; min-width: 220px; text-align: center;">
-                <div style="color: #e74c3c; font-size: 1em;">Focus on 31–60 day bucket</div>
+        <!-- Dashboard Toggle Section -->
+        <div class="dashboard-toggle">
+            <div class="toggle-container">
+                <div class="toggle-option active" id="ticketToggle">
+                    🎫 Ticket Dashboard
+                </div>
+                <div class="toggle-option inactive" id="taskToggle">
+                    📋 Task Management
+                </div>
+                <div class="toggle-option inactive" id="vulnerabilityToggle">
+                    🛡️ Security Vulnerabilities
+                </div>
+                <div class="toggle-option inactive" id="backupToggle">
+                    💾 Backup Dashboard
+                </div>
             </div>
-            <div style="flex: 1 1 220px; min-width: 220px; text-align: center;">
-                <div style="color: #e74c3c; font-size: 1em;">Review 6 tickets on hold</div>
-            </div>
-            <div style="flex: 1 1 220px; min-width: 220px; text-align: center;">
-                <div style="color: #e74c3c; font-size: 1em;">Focused response procedures</div>
-            </div>
-        </div> -->
+        </div>
 
-        <!-- Management Action Needed Title -->
-        <div style="text-align: center; margin: 30px 0 10px 0;">
-            <div style="font-size: 2em; font-weight: 500; color: #222;">Management Action Needed</div>
-        </div>
-        
-        <!-- KPI Snapshot Table -->
-        <div class="kpi-snapshot">
-            <h2>📊 Weekly IT Managed Services — KPI Snapshot</h2>
-            <table class="kpi-table">
-                <thead>
-                    <tr>
-                        <th>Area</th>
-                        <th>Current</th>
-                        <th>Status</th>
-                        <th>Action Needed</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>🎫 <strong>Tickets</strong></td>
-                        <td>728 total / 21 open</td>
-                        <td>✅ Good</td>
-                        <td>Monitor aging tickets</td>
-                    </tr>
-                    <tr>
-                        <td>📈 <strong>SLA Compliance</strong></td>
-                        <td>~83.7% compliance</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Focus on P1/P2 priorities</td>
-                    </tr>
-                    <tr>
-                        <td>⚡ <strong>Resolution Time</strong></td>
-                        <td>~28.3 days avg aging</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Address long-standing tickets</td>
-                    </tr>
-                    <tr>
-                        <td>⏳ <strong>Aging</strong></td>
-                        <td>Oldest 41 days</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Prioritize 31-60 day bucket</td>
-                    </tr>
-                    <tr>
-                        <td>🏷️ <strong>Priority Hygiene</strong></td>
-                        <td>15 missing priorities</td>
-                        <td>✅ Good</td>
-                        <td>Assign missing priorities</td>
-                    </tr>
-                    <tr>
-                        <td>🚧 <strong>Blocked Items</strong></td>
-                        <td>6 on-hold tickets</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Review hold reasons</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Tickets Needs Intervention Table -->
-        <div class="intervention-table">
-            <h2>⏳ Tickets — Needs Intervention</h2>
-            <table class="aging-intervention-table">
-                <thead>
-                    <tr>
-                        <th><strong>Aging Bucket</strong></th>
-                        <th><strong>Open Tickets</strong></th>
-                        <th><strong>Ticket IDs</strong></th>
-                        <th><strong>Action Needed</strong></th>
-                        <th><strong>Impact if Management Intervenes</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>0-2 days</td>
-                        <td>0</td>
-                        <td>---</td>
-                        <td>---</td>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <td>3-7 days</td>
-                        <td>0</td>
-                        <td>---</td>
-                        <td>---</td>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <td>8-14 days</td>
-                        <td>3</td>
-                        <td>42932 (CCTV), 42935 (Amlock), 42945 (SECTONA PAM)</td>
-                        <td>Monitor and ensure SLA met</td>
-                        <td>Prevents escalation risk</td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>15-30 days</td>
-                        <td>9</td>
-                        <td>42675 (IAM), 42676 (New Employee), 42727 (Database), 42735 (Applications), 42753 (Database), 42762 (General), 42778 (New Employee), 42785 (Network), 42895 (General)</td>
-                        <td>Approve access requests, clear onboarding delays, assign & resolve, push user response</td>
-                        <td>⚡ Unblocks user access, 👥 speeds onboarding, ✅ clears backlog, 📊 enables reporting</td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>31-60 days</td>
-                        <td>9</td>
-                        <td>42302 (Hardware), 42347 (Software), 42375 (General), 42376 (General), 42424 (IT), 42535 (IAM), 42545 (Database), 42575 (Applications), 42586 (Network)</td>
-                        <td>Review and close/cancel stale tickets, resolve remaining active items</td>
-                        <td>🔐 Improves metrics, 📊 cleans up backlog, ✅ removes aged items</td>
-                    </tr>
-                    <tr>
-                        <td>>60 days</td>
-                        <td>0</td>
-                        <td>---</td>
-                        <td>---</td>
-                        <td>---</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Main KPI Cards -->
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <h3>Total Tickets</h3>
-                <div class="kpi-value good">728</div>
-                <div class="kpi-subtitle">21 Open • 707 Resolved (97.1%)</div>
+        <!-- TICKET DASHBOARD SECTION -->
+        <div id="ticketDashboard" class="dashboard-section active">
+            <!-- Management Action Needed Title -->
+            <div style="text-align: center; margin: 30px 0 10px 0;">
+                <div style="font-size: 2em; font-weight: 500; color: #222;">Management Action Needed</div>
             </div>
             
-            <div class="kpi-card">
-                <h3>Resolution SLA</h3>
-                <div class="kpi-value warning">83.7%</div>
-                <div class="kpi-subtitle">609 Met • 119 Missed</div>
-            </div>
-            
-            <div class="kpi-card">
-                <h3>Response SLA</h3>
-                <div class="kpi-value good">91.5%</div>
-                <div class="kpi-subtitle">666 Met • 62 Missed</div>
-            </div>
-            
-            <div class="kpi-card">
-                <h3>Average Aging</h3>
-                <div class="kpi-value warning">28.3</div>
-                <div class="kpi-subtitle">days for 21 open tickets</div>
-            </div>
-            
-            <div class="kpi-card">
-                <h3>Priority Hygiene</h3>
-                <div class="kpi-value good">97.9%</div>
-                <div class="kpi-subtitle">15 missing priorities</div>
-            </div>
-            
-            <div class="kpi-card">
-                <h3>Critical Issues</h3>
-                <div class="kpi-value critical">18</div>
-                <div class="kpi-subtitle">tickets aging 14+ days</div>
-            </div>
-        </div>
-        
-        <!-- Section: Ticket Distribution Analysis -->
-        <div class="section-title">
-            <h2>Ticket Distribution & Volume Analysis</h2>
-        </div>
-        
-        <div class="charts-grid">
-            <div class="chart-container">
-                <h3>Priority Distribution (728 Tickets)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="priorityChart"></canvas>
-                </div>
-                <div class="summary-stats">
-                    <div class="summary-stat">
-                        <div class="value">425</div>
-                        <div class="label">P3 (58.4%)</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">247</div>
-                        <div class="label">P4 (33.9%)</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">34</div>
-                        <div class="label">P2 (4.7%)</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">7</div>
-                        <div class="label">P1 (1.0%)</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Request Type Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="requestTypeChart"></canvas>
-                </div>
-                <div class="summary-stats">
-                    <div class="summary-stat">
-                        <div class="value">409</div>
-                        <div class="label">Incidents (56.2%)</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">319</div>
-                        <div class="label">Service Requests (43.8%)</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Top Categories by Volume</h3>
-                <div class="chart-wrapper">
-                    <canvas id="categoryVolumeChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Department Activity</h3>
-                <div class="chart-wrapper">
-                    <canvas id="departmentChart"></canvas>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section: SLA Performance Analysis -->
-        <div class="section-title">
-            <h2>SLA Performance Analysis</h2>
-        </div>
-        
-        <div class="charts-grid">
-            <div class="chart-container">
-                <h3>SLA Compliance by Priority</h3>
-                <div class="chart-wrapper">
-                    <canvas id="slaByPriorityChart"></canvas>
-                </div>
-                <div class="summary-stats">
-                    <div class="summary-stat">
-                        <div class="value" style="color: #e74c3c;">28.6%</div>
-                        <div class="label">P1 Compliance</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value" style="color: #e74c3c;">17.6%</div>
-                        <div class="label">P2 Compliance</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value" style="color: #f39c12;">82.6%</div>
-                        <div class="label">P3 Compliance</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value" style="color: #27ae60;">95.1%</div>
-                        <div class="label">P4 Compliance</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Resolution Time by Priority</h3>
-                <div class="chart-wrapper">
-                    <canvas id="resolutionTimeChart"></canvas>
-                </div>
-                <div class="summary-stats">
-                    <div class="summary-stat">
-                        <div class="value" style="color: #e74c3c;">219.8h</div>
-                        <div class="label">P1 Avg</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value" style="color: #f39c12;">98.4h</div>
-                        <div class="label">P2 Avg</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value" style="color: #27ae60;">35.4h</div>
-                        <div class="label">P3 Avg</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">62.0h</div>
-                        <div class="label">P4 Avg</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container wide-chart">
-                <h3>SLA Performance by Category</h3>
-                <div class="chart-wrapper">
-                    <canvas id="slaByCategoryChart"></canvas>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section: Team Performance -->
-        <div class="section-title">
-            <h2>Team Performance & Workload Analysis</h2>
-        </div>
-        
-        <div class="charts-grid">
-            <div class="chart-container wide-chart">
-                <h3>Individual Technician Performance</h3>
-                <div class="chart-wrapper tall">
-                    <canvas id="technicianDetailChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Team Workload Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="teamWorkloadChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Top Performers by Resolution Rate</h3>
-                <div class="chart-wrapper">
-                    <canvas id="topPerformersChart"></canvas>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section: Aging Analysis -->
-        <div class="section-title">
-            <h2>Ticket Aging Analysis</h2>
-        </div>
-        
-        <div class="charts-grid">
-            <div class="chart-container">
-                <h3>Aging Bucket Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="agingChart"></canvas>
-                </div>
-                <div class="summary-stats">
-                    <div class="summary-stat">
-                        <div class="value">3</div>
-                        <div class="label">8-14 days</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">9</div>
-                        <div class="label">15-30 days</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">9</div>
-                        <div class="label">31-60 days</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Aging vs Priority Analysis</h3>
-                <div class="chart-wrapper">
-                    <canvas id="agingPriorityChart"></canvas>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Critical Aging Tickets Table -->
-        <div class="table-container">
-            <div class="table-header">
-                <h3>Critical Aging Tickets (8+ Days) - Immediate Action Required</h3>
-            </div>
-            <div class="table-content">
-                <table id="agingTicketsTable">
+            <!-- KPI Snapshot Table -->
+            <div class="kpi-snapshot">
+                <h2>📊 Weekly IT Managed Services — KPI Snapshot</h2>
+                <table class="kpi-table">
                     <thead>
                         <tr>
-                            <th>Ticket ID</th>
-                            <th>Subject</th>
-                            <th>Priority</th>
-                            <th>Category</th>
-                            <th>Technician</th>
-                            <th>Aging Days</th>
+                            <th>Area</th>
+                            <th>Current</th>
                             <th>Status</th>
-                            <th>Created Date</th>
+                            <th>Action Needed</th>
                         </tr>
                     </thead>
-                    <tbody id="agingTicketsBody">
+                    <tbody>
+                        <tr>
+                            <td>🎫 <strong>Tickets</strong></td>
+                            <td>728 total / 21 open</td>
+                            <td>✅ Good</td>
+                            <td>Monitor aging tickets</td>
+                        </tr>
+                        <tr>
+                            <td>📈 <strong>SLA Compliance</strong></td>
+                            <td>~83.7% compliance</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Focus on P1/P2 priorities</td>
+                        </tr>
+                        <tr>
+                            <td>⚡ <strong>Resolution Time</strong></td>
+                            <td>~28.3 days avg aging</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Address long-standing tickets</td>
+                        </tr>
+                        <tr>
+                            <td>⏳ <strong>Aging</strong></td>
+                            <td>Oldest 41 days</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Prioritize 31-60 day bucket</td>
+                        </tr>
+                        <tr>
+                            <td>🏷️ <strong>Priority Hygiene</strong></td>
+                            <td>15 missing priorities</td>
+                            <td>✅ Good</td>
+                            <td>Assign missing priorities</td>
+                        </tr>
+                        <tr>
+                            <td>🚧 <strong>Blocked Items</strong></td>
+                            <td>6 on-hold tickets</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Review hold reasons</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        
-        <!-- Detailed Technician Performance Table -->
-        <div class="table-container">
-            <div class="table-header">
-                <h3>Detailed Technician Performance Breakdown</h3>
-            </div>
-            <div class="table-content">
-                <table id="technicianPerformanceTable">
+            
+            <!-- Tickets Needs Intervention Table -->
+            <div class="intervention-table">
+                <h2>⏳ Tickets — Needs Intervention</h2>
+                <table class="aging-intervention-table">
                     <thead>
                         <tr>
-                            <th>Technician</th>
-                            <th>Total Tickets</th>
-                            <th>Open</th>
-                            <th>Closed</th>
-                            <th>Resolution Rate</th>
-                            <th>P1</th>
-                            <th>P2</th>
-                            <th>P3</th>
-                            <th>P4</th>
+                            <th><strong>Aging Bucket</strong></th>
+                            <th><strong>Open Tickets</strong></th>
+                            <th><strong>Ticket IDs</strong></th>
+                            <th><strong>Action Needed</strong></th>
+                            <th><strong>Impact if Management Intervenes</strong></th>
                         </tr>
                     </thead>
-                    <tbody id="technicianPerformanceBody">
+                    <tbody>
+                        <tr>
+                            <td>0-2 days</td>
+                            <td>0</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                        </tr>
+                        <tr>
+                            <td>3-7 days</td>
+                            <td>0</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                        </tr>
+                        <tr>
+                            <td>8-14 days</td>
+                            <td>3</td>
+                            <td>42932 (CCTV), 42935 (Amlock), 42945 (SECTONA PAM)</td>
+                            <td>Monitor and ensure SLA met</td>
+                            <td>Prevents escalation risk</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td>15-30 days</td>
+                            <td>9</td>
+                            <td>42675 (IAM), 42676 (New Employee), 42727 (Database), 42735 (Applications), 42753 (Database), 42762 (General), 42778 (New Employee), 42785 (Network), 42895 (General)</td>
+                            <td>Approve access requests, clear onboarding delays, assign & resolve, push user response</td>
+                            <td>⚡ Unblocks user access, 👥 speeds onboarding, ✅ clears backlog, 📊 enables reporting</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td>31-60 days</td>
+                            <td>9</td>
+                            <td>42302 (Hardware), 42347 (Software), 42375 (General), 42376 (General), 42424 (IT), 42535 (IAM), 42545 (Database), 42575 (Applications), 42586 (Network)</td>
+                            <td>Review and close/cancel stale tickets, resolve remaining active items</td>
+                            <td>🔐 Improves metrics, 📊 cleans up backlog, ✅ removes aged items</td>
+                        </tr>
+                        <tr>
+                            <td>>60 days</td>
+                            <td>0</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        
-        <!-- Performance Summary Metrics -->
-        <div class="chart-container">
-            <h3>Comprehensive Performance Summary</h3>
-            <div class="metric-grid">
-                <div class="metric-item">
-                    <div class="metric-label">Total Volume</div>
-                    <div class="metric-value">728 tickets</div>
+            
+            <!-- Main KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Total Tickets</h3>
+                    <div class="kpi-value good">728</div>
+                    <div class="kpi-subtitle">21 Open • 707 Resolved (97.1%)</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-label">Resolution Rate</div>
-                    <div class="metric-value">97.1%</div>
+                
+                <div class="kpi-card">
+                    <h3>Resolution SLA</h3>
+                    <div class="kpi-value warning">83.7%</div>
+                    <div class="kpi-subtitle">609 Met • 119 Missed</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-label">Response SLA</div>
-                    <div class="metric-value">91.5%</div>
+                
+                <div class="kpi-card">
+                    <h3>Response SLA</h3>
+                    <div class="kpi-value good">91.5%</div>
+                    <div class="kpi-subtitle">666 Met • 62 Missed</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-label">Resolution SLA</div>
-                    <div class="metric-value">83.7%</div>
+                
+                <div class="kpi-card">
+                    <h3>Average Aging</h3>
+                    <div class="kpi-value warning">28.3</div>
+                    <div class="kpi-subtitle">days for 21 open tickets</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-label">Active Technicians</div>
-                    <div class="metric-value">17 staff</div>
+                
+                <div class="kpi-card">
+                    <h3>Priority Hygiene</h3>
+                    <div class="kpi-value good">97.9%</div>
+                    <div class="kpi-subtitle">15 missing priorities</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-label">Support Teams</div>
-                    <div class="metric-value">13 groups</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-label">Avg Aging (Open)</div>
-                    <div class="metric-value">28.3 days</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-label">Priority Hygiene</div>
-                    <div class="metric-value">97.9%</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-label">High Priority Open</div>
-                    <div class="metric-value">1 ticket</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-label">Critical Aging</div>
-                    <div class="metric-value">18 tickets</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-label">Database SLA</div>
-                    <div class="metric-value" style="color: #27ae60;">98.0%</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-label">General Category SLA</div>
-                    <div class="metric-value" style="color: #e74c3c;">47.3%</div>
+                
+                <div class="kpi-card">
+                    <h3>Critical Issues</h3>
+                    <div class="kpi-value critical">18</div>
+                    <div class="kpi-subtitle">tickets aging 14+ days</div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Task Management Dashboard Section -->
-        <div class="section-title">
-            <h2>Task Management Dashboard</h2>
+            
+            <!-- Section: Ticket Distribution Analysis -->
+            <div class="section-title">
+                <h2>Ticket Distribution & Volume Analysis</h2>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Priority Distribution (728 Tickets)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="priorityChart"></canvas>
+                    </div>
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <div class="value">425</div>
+                            <div class="label">P3 (58.4%)</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">247</div>
+                            <div class="label">P4 (33.9%)</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">34</div>
+                            <div class="label">P2 (4.7%)</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">7</div>
+                            <div class="label">P1 (1.0%)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Request Type Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="requestTypeChart"></canvas>
+                    </div>
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <div class="value">409</div>
+                            <div class="label">Incidents (56.2%)</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">319</div>
+                            <div class="label">Service Requests (43.8%)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Top Categories by Volume</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="categoryVolumeChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Department Activity</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section: SLA Performance Analysis -->
+            <div class="section-title">
+                <h2>SLA Performance Analysis</h2>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>SLA Compliance by Priority</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="slaByPriorityChart"></canvas>
+                    </div>
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <div class="value" style="color: #e74c3c;">28.6%</div>
+                            <div class="label">P1 Compliance</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value" style="color: #e74c3c;">17.6%</div>
+                            <div class="label">P2 Compliance</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value" style="color: #f39c12;">82.6%</div>
+                            <div class="label">P3 Compliance</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value" style="color: #27ae60;">95.1%</div>
+                            <div class="label">P4 Compliance</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Resolution Time by Priority</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="resolutionTimeChart"></canvas>
+                    </div>
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <div class="value" style="color: #e74c3c;">219.8h</div>
+                            <div class="label">P1 Avg</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value" style="color: #f39c12;">98.4h</div>
+                            <div class="label">P2 Avg</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value" style="color: #27ae60;">35.4h</div>
+                            <div class="label">P3 Avg</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">62.0h</div>
+                            <div class="label">P4 Avg</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container wide-chart">
+                    <h3>SLA Performance by Category</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="slaByCategoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section: Team Performance -->
+            <div class="section-title">
+                <h2>Team Performance & Workload Analysis</h2>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-container wide-chart">
+                    <h3>Individual Technician Performance</h3>
+                    <div class="chart-wrapper tall">
+                        <canvas id="technicianDetailChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Team Workload Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="teamWorkloadChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Top Performers by Resolution Rate</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="topPerformersChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section: Aging Analysis -->
+            <div class="section-title">
+                <h2>Ticket Aging Analysis</h2>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Aging Bucket Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="agingChart"></canvas>
+                    </div>
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <div class="value">3</div>
+                            <div class="label">8-14 days</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">9</div>
+                            <div class="label">15-30 days</div>
+                        </div>
+                        <div class="summary-stat">
+                            <div class="value">9</div>
+                            <div class="label">31-60 days</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Aging vs Priority Analysis</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="agingPriorityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Critical Aging Tickets Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Critical Aging Tickets (8+ Days) - Immediate Action Required</h3>
+                </div>
+                <div class="table-content">
+                    <table id="agingTicketsTable">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Subject</th>
+                                <th>Priority</th>
+                                <th>Category</th>
+                                <th>Technician</th>
+                                <th>Aging Days</th>
+                                <th>Status</th>
+                                <th>Created Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agingTicketsBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Detailed Technician Performance Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Detailed Technician Performance Breakdown</h3>
+                </div>
+                <div class="table-content">
+                    <table id="technicianPerformanceTable">
+                        <thead>
+                            <tr>
+                                <th>Technician</th>
+                                <th>Total Tickets</th>
+                                <th>Open</th>
+                                <th>Closed</th>
+                                <th>Resolution Rate</th>
+                                <th>P1</th>
+                                <th>P2</th>
+                                <th>P3</th>
+                                <th>P4</th>
+                            </tr>
+                        </thead>
+                        <tbody id="technicianPerformanceBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Performance Summary Metrics -->
+            <div class="chart-container">
+                <h3>Comprehensive Performance Summary</h3>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Total Volume</div>
+                        <div class="metric-value">728 tickets</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Resolution Rate</div>
+                        <div class="metric-value">97.1%</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Response SLA</div>
+                        <div class="metric-value">91.5%</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Resolution SLA</div>
+                        <div class="metric-value">83.7%</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Active Technicians</div>
+                        <div class="metric-value">17 staff</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Support Teams</div>
+                        <div class="metric-value">13 groups</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Avg Aging (Open)</div>
+                        <div class="metric-value">28.3 days</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Priority Hygiene</div>
+                        <div class="metric-value">97.9%</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">High Priority Open</div>
+                        <div class="metric-value">1 ticket</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Critical Aging</div>
+                        <div class="metric-value">18 tickets</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Database SLA</div>
+                        <div class="metric-value" style="color: #27ae60;">98.0%</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">General Category SLA</div>
+                        <div class="metric-value" style="color: #e74c3c;">47.3%</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="kpi-snapshot">
-            <h2>📋 Task Management — KPI Snapshot</h2>
-            <table class="kpi-table">
-                <thead>
-                    <tr>
-                        <th>Area</th>
-                        <th>Current</th>
-                        <th>Status</th>
-                        <th>Action Needed</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>📝 <strong>Total Tasks</strong></td>
-                        <td>10 active tasks</td>
-                        <td>✅ Good</td>
-                        <td>Continue monitoring progress</td>
-                    </tr>
-                    <tr>
-                        <td>✅ <strong>Completion Rate</strong></td>
-                        <td>10% completed</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Accelerate task execution</td>
-                    </tr>
-                    <tr>
-                        <td>⏰ <strong>On Schedule</strong></td>
-                        <td>80% on track</td>
-                        <td>✅ Good</td>
-                        <td>Monitor overdue items</td>
-                    </tr>
-                    <tr>
-                        <td>🔴 <strong>Priority Tasks</strong></td>
-                        <td>1 Important</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Focus on Monthly Exec report</td>
-                    </tr>
-                    <tr>
-                        <td>📅 <strong>Upcoming Due</strong></td>
-                        <td>2 due today</td>
-                        <td>⚠️ Needs Attention</td>
-                        <td>Complete daily tasks</td>
-                    </tr>
-                    <tr>
-                        <td>🎯 <strong>Department Coverage</strong></td>
-                        <td>Cross-functional</td>
-                        <td>✅ Good</td>
-                        <td>Maintain coordination</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- TASK MANAGEMENT DASHBOARD SECTION -->
+        <div id="taskDashboard" class="dashboard-section">
+            <!-- Task Management Dashboard Section -->
+            <div class="section-title">
+                <h2>Task Management Dashboard</h2>
+            </div>
 
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <h3>Total Tasks</h3>
-                <div class="kpi-value info">10</div>
-                <div class="kpi-subtitle">1 Completed • 9 Active</div>
-            </div>
-            <div class="kpi-card">
-                <h3>Completion Rate</h3>
-                <div class="kpi-value warning">10%</div>
-                <div class="kpi-subtitle">1 of 10 tasks completed</div>
-            </div>
-            <div class="kpi-card">
-                <h3>On Schedule</h3>
-                <div class="kpi-value good">80%</div>
-                <div class="kpi-subtitle">8 tasks on track</div>
-            </div>
-            <div class="kpi-card">
-                <h3>Average Duration</h3>
-                <div class="kpi-value info">8.5</div>
-                <div class="kpi-subtitle">days per task</div>
-            </div>
-            <div class="kpi-card">
-                <h3>Priority Distribution</h3>
-                <div class="kpi-value warning">1</div>
-                <div class="kpi-subtitle">Important task</div>
-            </div>
-            <div class="kpi-card">
-                <h3>Due Today</h3>
-                <div class="kpi-value critical">2</div>
-                <div class="kpi-subtitle">tasks need attention</div>
-            </div>
-        </div>
-
-        <div class="charts-grid">
-            <div class="chart-container">
-                <h3>Task Status Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="taskStatusChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-container">
-                <h3>Priority Breakdown</h3>
-                <div class="chart-wrapper">
-                    <canvas id="taskPriorityChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-container">
-                <h3>Bucket Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="taskBucketChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-container">
-                <h3>Task Timeline</h3>
-                <div class="chart-wrapper">
-                    <canvas id="taskTimelineChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-container wide-chart">
-                <h3>Task Completion Progress</h3>
-                <div class="chart-wrapper">
-                    <canvas id="taskProgressChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <div class="table-header">
-                <h3>Active Tasks - Detailed View</h3>
-            </div>
-            <div class="table-content">
-                <table id="activeTasksTable">
+            <div class="kpi-snapshot">
+                <h2>📋 Task Management — KPI Snapshot</h2>
+                <table class="kpi-table">
                     <thead>
                         <tr>
-                            <th>Task Name</th>
-                            <th>Assigned To</th>
-                            <th>Priority</th>
-                            <th>Bucket</th>
-                            <th>Start Date</th>
-                            <th>Due Date</th>
-                            <th>Duration</th>
-                            <th>Progress</th>
+                            <th>Area</th>
+                            <th>Current</th>
                             <th>Status</th>
+                            <th>Action Needed</th>
                         </tr>
                     </thead>
-                    <tbody id="activeTasksBody">
+                    <tbody>
+                        <tr>
+                            <td>📝 <strong>Total Tasks</strong></td>
+                            <td>10 active tasks</td>
+                            <td>✅ Good</td>
+                            <td>Continue monitoring progress</td>
+                        </tr>
+                        <tr>
+                            <td>✅ <strong>Completion Rate</strong></td>
+                            <td>10% completed</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Accelerate task execution</td>
+                        </tr>
+                        <tr>
+                            <td>⏰ <strong>On Schedule</strong></td>
+                            <td>80% on track</td>
+                            <td>✅ Good</td>
+                            <td>Monitor overdue items</td>
+                        </tr>
+                        <tr>
+                            <td>🔴 <strong>Priority Tasks</strong></td>
+                            <td>1 Important</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Focus on Monthly Exec report</td>
+                        </tr>
+                        <tr>
+                            <td>📅 <strong>Upcoming Due</strong></td>
+                            <td>2 due today</td>
+                            <td>⚠️ Needs Attention</td>
+                            <td>Complete daily tasks</td>
+                        </tr>
+                        <tr>
+                            <td>🎯 <strong>Department Coverage</strong></td>
+                            <td>Cross-functional</td>
+                            <td>✅ Good</td>
+                            <td>Maintain coordination</td>
+                        </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Total Tasks</h3>
+                    <div class="kpi-value info">10</div>
+                    <div class="kpi-subtitle">1 Completed • 9 Active</div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Completion Rate</h3>
+                    <div class="kpi-value warning">10%</div>
+                    <div class="kpi-subtitle">1 of 10 tasks completed</div>
+                </div>
+                <div class="kpi-card">
+                    <h3>On Schedule</h3>
+                    <div class="kpi-value good">80%</div>
+                    <div class="kpi-subtitle">8 tasks on track</div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Average Duration</h3>
+                    <div class="kpi-value info">8.5</div>
+                    <div class="kpi-subtitle">days per task</div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Priority Distribution</h3>
+                    <div class="kpi-value warning">1</div>
+                    <div class="kpi-subtitle">Important task</div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Due Today</h3>
+                    <div class="kpi-value critical">2</div>
+                    <div class="kpi-subtitle">tasks need attention</div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Task Status Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="taskStatusChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Priority Breakdown</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="taskPriorityChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Bucket Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="taskBucketChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Task Timeline</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="taskTimelineChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container wide-chart">
+                    <h3>Task Completion Progress</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="taskProgressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Active Tasks - Detailed View</h3>
+                </div>
+                <div class="table-content">
+                    <table id="activeTasksTable">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Assigned To</th>
+                                <th>Priority</th>
+                                <th>Bucket</th>
+                                <th>Start Date</th>
+                                <th>Due Date</th>
+                                <th>Duration</th>
+                                <th>Progress</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeTasksBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECURITY VULNERABILITY DASHBOARD SECTION -->
+        <div id="vulnerabilityDashboard" class="dashboard-section">
+            <div style="text-align: center; color: white; margin-bottom: 30px;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); color: #2c3e50;">🛡️ Security Vulnerability Dashboard</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9; color: #7f8c8d;">Real-time monitoring of security vulnerabilities and remediation status</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number critical">393</div>
+                    <div class="stat-label">Total Vulnerabilities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number remediated">88</div>
+                    <div class="stat-label">Remediated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number pending">290</div>
+                    <div class="stat-label">Pending Issues</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #17a2b8;">22.4%</div>
+                    <div class="stat-label">Resolution Rate</div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>📊 Vulnerability Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="vulnerabilitySeverityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>📈 Remediation Progress</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="vulnerabilityProgressChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>📋 Detailed Vulnerability Status</h3>
+                    <table style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Severity Level</th>
+                                <th>Total Detected</th>
+                                <th>Remediated</th>
+                                <th>Pending</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="severity-badge badge-critical">Critical</span></td>
+                                <td>33</td>
+                                <td>27</td>
+                                <td>6</td>
+                                <td>Critical Database Servers</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity-badge badge-high">High</span></td>
+                                <td>70</td>
+                                <td>61</td>
+                                <td>9</td>
+                                <td>Critical Database Servers</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity-badge badge-medium">Medium</span></td>
+                                <td>214</td>
+                                <td>0</td>
+                                <td>214</td>
+                                <td>Yet to Start</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity-badge badge-low">Low (Optional)</span></td>
+                                <td>76</td>
+                                <td>0</td>
+                                <td>76</td>
+                                <td>Yet to Start</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="chart-container">
+                    <h3>🎯 Priority Actions Required</h3>
+                    <div style="margin: 15px 0;">
+                        <strong>Critical Priority:</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill progress-remediated" style="width: 81.8%;">
+                                6 Critical Pending
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <strong>High Priority:</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill progress-remediated" style="width: 87.1%;">
+                                9 High Pending
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <strong>Medium Priority:</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%; background: #ffc107;">
+                                214 Medium Pending
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container" style="grid-column: 1 / -1;">
+                <h3>🏆 Overall Remediation Status</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                    <div class="chart-wrapper">
+                        <canvas id="vulnerabilityOverallChart"></canvas>
+                    </div>
+                    <div>
+                        <h3>Key Metrics</h3>
+                        <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                            <li style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                <strong>Total Resolution Rate:</strong> 22.4%
+                            </li>
+                            <li style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                <strong>Critical/High Resolution:</strong> 85.4%
+                            </li>
+                            <li style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                <strong>Immediate Attention Required:</strong> 290 issues
+                            </li>
+                            <li style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                <strong>Critical Database Servers:</strong> Needs focus
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACKUP DASHBOARD SECTION -->
+        <div id="backupDashboard" class="dashboard-section">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: #2c3e50;">💾 Backup Status Dashboard</h1>
+                <p style="font-size: 1.2rem; color: #7f8c8d;">Real-time monitoring of system backup operations with advanced analytics</p>
+            </div>
+
+            <div class="summary-cards">
+                <div class="card">
+                    <div class="card-icon success">✓</div>
+                    <div class="card-title">Total Backups Checked</div>
+                    <div class="card-value" id="totalBackups">3</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon success">📊</div>
+                    <div class="card-title">Successful Backups</div>
+                    <div class="card-value" id="successfulBackups">3</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon success">❌</div>
+                    <div class="card-title">Failed Jobs</div>
+                    <div class="card-value" id="failedJobs">0</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon success">⚡</div>
+                    <div class="card-title">System Health</div>
+                    <div class="card-value">100%</div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <h2 style="font-size: 1.8em; color: #2c3e50; margin-bottom: 20px; text-align: center;">📈 Analytics & Insights</h2>
+                
+                <div class="performance-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #27ae60;">99.8%</div>
+                        <div class="metric-label">Success Rate (30 days)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #3498db;">2.3 TB</div>
+                        <div class="metric-label">Data Backed Up Today</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #e74c3c;">45 min</div>
+                        <div class="metric-label">Avg. Backup Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #f39c12;">85%</div>
+                        <div class="metric-label">Storage Utilization</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>📊 Backup Success Rate</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="backupSuccessRateChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>⏱️ Backup Performance Trends</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="backupPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>💾 Storage Usage by Backup Type</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="backupStorageChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>🕐 Backup Completion Times</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="backupTimingChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>📅 7-Day Backup History</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="backupHistoryChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>🎯 System Health Score</h3>
+                        <div class="gauge-wrapper">
+                            <canvas id="backupHealthGauge"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 30px;">
+                <button class="refresh-btn" onclick="refreshBackupDashboard()">🔄 Refresh Status</button>
+                
+                <h2 style="font-size: 1.8em; color: #2c3e50; margin-bottom: 20px;">📋 Detailed Backup Status</h2>
+                
+                <table class="backup-table">
+                    <thead>
+                        <tr>
+                            <th>Backup Type</th>
+                            <th>Checked</th>
+                            <th>Status</th>
+                            <th>Failed</th>
+                            <th>Remediation Action</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Daily Backup</strong></td>
+                            <td><span class="status-badge status-success">Yes</span></td>
+                            <td><span class="status-badge status-success">Successful</span></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><input type="text" class="notes-input" placeholder="Additional comments" value="Completed successfully at 02:00 AM"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weekly Tape Backup</strong></td>
+                            <td><span class="status-badge status-success">Yes</span></td>
+                            <td><span class="status-badge status-success">Successful</span></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><input type="text" class="notes-input" placeholder="Comments" value="Tape backup completed - Tape #TB-2025-038"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Other Backups</strong></td>
+                            <td><span class="status-badge status-success">Yes</span></td>
+                            <td><span class="status-badge status-success">Successful</span></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><input type="text" class="notes-input" placeholder="Comments" value="Cloud sync and archive backups completed"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 style="font-size: 1.8em; color: #2c3e50; margin: 30px 0 20px 0;">📈 Summary Status</h2>
+                <table class="backup-table">
+                    <tbody>
+                        <tr>
+                            <td><strong>All backup jobs checked:</strong></td>
+                            <td><span class="status-badge status-success">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Failed jobs:</strong></td>
+                            <td><span class="status-badge status-success">0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Immediate actions required:</strong></td>
+                            <td><span class="status-badge status-success">0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weekly tape backup:</strong></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="timestamp">
+                    Last Updated: <span id="lastBackupUpdate"></span>
+                </div>
             </div>
         </div>
 
         <script>
+            // Global variables to track if charts are created
+            let vulnerabilityChartsCreated = false;
+            let taskChartsCreated = false;
+            let backupChartsCreated = false;
+
+            // Toggle functionality
+            function initializeToggle() {
+                const ticketToggle = document.getElementById('ticketToggle');
+                const taskToggle = document.getElementById('taskToggle');
+                const vulnerabilityToggle = document.getElementById('vulnerabilityToggle');
+                const backupToggle = document.getElementById('backupToggle');
+                const ticketDashboard = document.getElementById('ticketDashboard');
+                const taskDashboard = document.getElementById('taskDashboard');
+                const vulnerabilityDashboard = document.getElementById('vulnerabilityDashboard');
+                const backupDashboard = document.getElementById('backupDashboard');
+
+                function switchToTicketDashboard() {
+                    // Set active states
+                    ticketToggle.classList.add('active');
+                    ticketToggle.classList.remove('inactive');
+                    taskToggle.classList.add('inactive');
+                    taskToggle.classList.remove('active');
+                    vulnerabilityToggle.classList.add('inactive');
+                    vulnerabilityToggle.classList.remove('active');
+                    backupToggle.classList.add('inactive');
+                    backupToggle.classList.remove('active');
+                    
+                    // Show/hide dashboards
+                    ticketDashboard.classList.add('active');
+                    taskDashboard.classList.remove('active');
+                    vulnerabilityDashboard.classList.remove('active');
+                    backupDashboard.classList.remove('active');
+                }
+
+                function switchToTaskDashboard() {
+                    // Set active states
+                    taskToggle.classList.add('active');
+                    taskToggle.classList.remove('inactive');
+                    ticketToggle.classList.add('inactive');
+                    ticketToggle.classList.remove('active');
+                    vulnerabilityToggle.classList.add('inactive');
+                    vulnerabilityToggle.classList.remove('active');
+                    backupToggle.classList.add('inactive');
+                    backupToggle.classList.remove('active');
+                    
+                    // Show/hide dashboards
+                    taskDashboard.classList.add('active');
+                    ticketDashboard.classList.remove('active');
+                    vulnerabilityDashboard.classList.remove('active');
+                    backupDashboard.classList.remove('active');
+
+                    // Create task charts if not already created
+                    if (!taskChartsCreated) {
+                        setTimeout(() => {
+                            createTaskCharts();
+                            taskChartsCreated = true;
+                        }, 100);
+                    }
+                }
+
+                function switchToVulnerabilityDashboard() {
+                    // Set active states
+                    vulnerabilityToggle.classList.add('active');
+                    vulnerabilityToggle.classList.remove('inactive');
+                    ticketToggle.classList.add('inactive');
+                    ticketToggle.classList.remove('active');
+                    taskToggle.classList.add('inactive');
+                    taskToggle.classList.remove('active');
+                    backupToggle.classList.add('inactive');
+                    backupToggle.classList.remove('active');
+                    
+                    // Show/hide dashboards
+                    vulnerabilityDashboard.classList.add('active');
+                    ticketDashboard.classList.remove('active');
+                    taskDashboard.classList.remove('active');
+                    backupDashboard.classList.remove('active');
+
+                    // Create vulnerability charts if not already created
+                    if (!vulnerabilityChartsCreated) {
+                        setTimeout(() => {
+                            createVulnerabilityCharts();
+                            vulnerabilityChartsCreated = true;
+                        }, 100);
+                    }
+                }
+
+                function switchToBackupDashboard() {
+                    // Set active states
+                    backupToggle.classList.add('active');
+                    backupToggle.classList.remove('inactive');
+                    ticketToggle.classList.add('inactive');
+                    ticketToggle.classList.remove('active');
+                    taskToggle.classList.add('inactive');
+                    taskToggle.classList.remove('active');
+                    vulnerabilityToggle.classList.add('inactive');
+                    vulnerabilityToggle.classList.remove('active');
+                    
+                    // Show/hide dashboards
+                    backupDashboard.classList.add('active');
+                    ticketDashboard.classList.remove('active');
+                    taskDashboard.classList.remove('active');
+                    vulnerabilityDashboard.classList.remove('active');
+
+                    // Create backup charts if not already created
+                    if (!backupChartsCreated) {
+                        setTimeout(() => {
+                            createBackupCharts();
+                            updateBackupTimestamp();
+                            backupChartsCreated = true;
+                        }, 100);
+                    }
+                }
+
+                ticketToggle.addEventListener('click', switchToTicketDashboard);
+                taskToggle.addEventListener('click', switchToTaskDashboard);
+                vulnerabilityToggle.addEventListener('click', switchToVulnerabilityDashboard);
+                backupToggle.addEventListener('click', switchToBackupDashboard);
+            }
+
+            // Backup Dashboard Functions
+            function createBackupCharts() {
+                // Color schemes for backup charts
+                const colors = {
+                    primary: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6'],
+                    gradients: {
+                        blue: ['rgba(52, 152, 219, 0.8)', 'rgba(52, 152, 219, 0.2)'],
+                        green: ['rgba(46, 204, 113, 0.8)', 'rgba(46, 204, 113, 0.2)'],
+                        red: ['rgba(231, 76, 60, 0.8)', 'rgba(231, 76, 60, 0.2)'],
+                        orange: ['rgba(243, 156, 18, 0.8)', 'rgba(243, 156, 18, 0.2)'],
+                        purple: ['rgba(155, 89, 182, 0.8)', 'rgba(155, 89, 182, 0.2)']
+                    }
+                };
+
+                function createGradient(ctx, colorArray) {
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, colorArray[0]);
+                    gradient.addColorStop(1, colorArray[1]);
+                    return gradient;
+                }
+
+                // Success Rate Pie Chart
+                const successCtx = document.getElementById('backupSuccessRateChart').getContext('2d');
+                new Chart(successCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Successful', 'Failed', 'Pending'],
+                        datasets: [{
+                            data: [95, 3, 2],
+                            backgroundColor: [
+                                '#2ecc71',
+                                '#e74c3c',
+                                '#f39c12'
+                            ],
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        },
+                        animation: {
+                            animateScale: true,
+                            duration: 2000
+                        }
+                    }
+                });
+
+                // Performance Trends Line Chart
+                const performanceCtx = document.getElementById('backupPerformanceChart').getContext('2d');
+                const performanceGradient = createGradient(performanceCtx, colors.gradients.blue);
+                new Chart(performanceCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Success Rate (%)',
+                            data: [98, 100, 97, 99, 100, 98, 100],
+                            borderColor: '#3498db',
+                            backgroundColor: performanceGradient,
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#3498db',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 95,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+
+                // Storage Usage Bar Chart
+                const storageCtx = document.getElementById('backupStorageChart').getContext('2d');
+                new Chart(storageCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Daily Backup', 'Weekly Tape', 'Cloud Sync', 'Archives'],
+                        datasets: [{
+                            label: 'Storage (TB)',
+                            data: [1.2, 0.8, 0.3, 2.1],
+                            backgroundColor: [
+                                'rgba(52, 152, 219, 0.8)',
+                                'rgba(46, 204, 113, 0.8)',
+                                'rgba(243, 156, 18, 0.8)',
+                                'rgba(155, 89, 182, 0.8)'
+                            ],
+                            borderColor: [
+                                '#3498db',
+                                '#2ecc71',
+                                '#f39c12',
+                                '#9b59b6'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000,
+                            delay: (context) => context.dataIndex * 200
+                        }
+                    }
+                });
+
+                // Timing Chart
+                const timingCtx = document.getElementById('backupTimingChart').getContext('2d');
+                new Chart(timingCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Speed', 'Reliability', 'Efficiency', 'Storage', 'Recovery'],
+                        datasets: [{
+                            label: 'Current Performance',
+                            data: [85, 98, 92, 88, 95],
+                            backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                            borderColor: '#2ecc71',
+                            pointBackgroundColor: '#2ecc71',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            borderWidth: 3
+                        }, {
+                            label: 'Target Performance',
+                            data: [90, 99, 95, 92, 98],
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            borderColor: '#3498db',
+                            pointBackgroundColor: '#3498db',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        },
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2500
+                        }
+                    }
+                });
+
+                // History Chart
+                const historyCtx = document.getElementById('backupHistoryChart').getContext('2d');
+                new Chart(historyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Sep 15', 'Sep 16', 'Sep 17', 'Sep 18', 'Sep 19', 'Sep 20', 'Sep 21'],
+                        datasets: [{
+                            label: 'Successful',
+                            data: [3, 3, 3, 2, 3, 3, 3],
+                            backgroundColor: 'rgba(46, 204, 113, 0.8)',
+                            borderColor: '#2ecc71',
+                            borderWidth: 2
+                        }, {
+                            label: 'Failed',
+                            data: [0, 0, 0, 1, 0, 0, 0],
+                            backgroundColor: 'rgba(231, 76, 60, 0.8)',
+                            borderColor: '#e74c3c',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                                grid: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true,
+                                max: 4,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000
+                        }
+                    }
+                });
+
+                // Health Gauge
+                const healthCtx = document.getElementById('backupHealthGauge').getContext('2d');
+                new Chart(healthCtx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [100, 0],
+                            backgroundColor: [
+                                '#2ecc71',
+                                '#ecf0f1'
+                            ],
+                            borderWidth: 0,
+                            cutout: '75%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        circumference: 180,
+                        rotation: 270,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                enabled: false
+                            }
+                        },
+                        animation: {
+                            animateRotate: true,
+                            duration: 2000
+                        }
+                    },
+                    plugins: [{
+                        beforeDraw: function(chart) {
+                            const width = chart.width;
+                            const height = chart.height;
+                            const ctx = chart.ctx;
+                            
+                            ctx.restore();
+                            const fontSize = (height / 100).toFixed(2);
+                            ctx.font = `bold ${fontSize}em Arial`;
+                            ctx.textBaseline = 'middle';
+                            ctx.fillStyle = '#2c3e50';
+                            
+                            const text = '100%';
+                            const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                            const textY = height / 1.4;
+                            
+                            ctx.fillText(text, textX, textY);
+                            ctx.save();
+                        }
+                    }]
+                });
+            }
+
+            function updateBackupTimestamp() {
+                const now = new Date();
+                const timestamp = now.toLocaleString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('lastBackupUpdate').textContent = timestamp;
+            }
+
+            function refreshBackupDashboard() {
+                const btn = document.querySelector('.refresh-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '🔄 Refreshing...';
+                btn.disabled = true;
+                
+                // Animate cards
+                const cards = document.querySelectorAll('.card, .chart-container');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            card.style.transform = 'scale(1)';
+                        }, 200);
+                    }, index * 100);
+                });
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    updateBackupTimestamp();
+                    
+                    // Refresh charts with animation
+                    Chart.instances.forEach(chart => {
+                        chart.update('active');
+                    });
+                }, 2000);
+            }
+
             // Comprehensive dashboard data from JSON
             const dashboardData = {
                 totalTickets: 728,
@@ -1581,6 +2756,106 @@
                 }
             });
 
+            // Vulnerability Charts
+            function createVulnerabilityCharts() {
+                // Severity Distribution Chart
+                const severityCtx = document.getElementById('vulnerabilitySeverityChart').getContext('2d');
+                new Chart(severityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Critical', 'High', 'Medium', 'Low'],
+                        datasets: [{
+                            data: [33, 70, 214, 76],
+                            backgroundColor: ['#dc3545', '#fd7e14', '#ffc107', '#6c757d'],
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Remediation Progress Chart
+                const progressCtx = document.getElementById('vulnerabilityProgressChart').getContext('2d');
+                new Chart(progressCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Critical', 'High', 'Medium', 'Low'],
+                        datasets: [
+                            {
+                                label: 'Remediated',
+                                data: [27, 61, 0, 0],
+                                backgroundColor: '#28a745',
+                                borderRadius: 5
+                            },
+                            {
+                                label: 'Pending',
+                                data: [6, 9, 214, 76],
+                                backgroundColor: '#dc3545',
+                                borderRadius: 5
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+
+                // Overall Status Chart
+                const overallCtx = document.getElementById('vulnerabilityOverallChart').getContext('2d');
+                new Chart(overallCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Remediated', 'Pending'],
+                        datasets: [{
+                            data: [88, 305],
+                            backgroundColor: ['#28a745', '#dc3545'],
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
             // Populate Tables
             function populateAgingTable() {
                 const tbody = document.getElementById('agingTicketsBody');
@@ -1595,14 +2870,14 @@
                     }
                     
                     row.innerHTML = `
-    <td><strong>#${ticket.request_id}</strong></td>
-    <td title="${ticket.subject}">${ticket.subject}</td>
-    <td><span class="priority-${ticket.priority.toLowerCase()}">${ticket.priority}</span></td>
-    <td>${ticket.category}</td>
-    <td>${ticket.technician.split(' ')[0]} ${ticket.technician.split(' ')[1] || ''}</td>
-    <td><strong>${ticket.aging_days} days</strong></td>
-    <td><span class="status-badge status-${ticket.status.includes('Progress') ? 'progress' : ticket.status.includes('Hold') ? 'hold' : 'cancelled'}">${ticket.status}</span></td>
-    <td>${ticket.created_time}</td>
+        <td><strong>#${ticket.request_id}</strong></td>
+        <td title="${ticket.subject}">${ticket.subject}</td>
+        <td><span class="priority-${ticket.priority.toLowerCase()}">${ticket.priority}</span></td>
+        <td>${ticket.category}</td>
+        <td>${ticket.technician.split(' ')[0]} ${ticket.technician.split(' ')[1] || ''}</td>
+        <td><strong>${ticket.aging_days} days</strong></td>
+        <td><span class="status-badge status-${ticket.status.includes('Progress') ? 'progress' : ticket.status.includes('Hold') ? 'hold' : 'cancelled'}">${ticket.status}</span></td>
+        <td>${ticket.created_time}</td>
                     `;
                     
                     tbody.appendChild(row);
@@ -1937,11 +3212,18 @@
                 });
             }
 
-            // Initialize tables
-            populateAgingTable();
-            populateTechnicianTable();
-            populateActiveTasksTable();
-            createTaskCharts();
+            // Initialize everything
+            function initializeDashboard() {
+                initializeToggle();
+                populateAgingTable();
+                populateTechnicianTable();
+                populateActiveTasksTable();
+                // Only create ticket dashboard charts initially
+                // Task and vulnerability charts will be created when their dashboards are activated
+            }
+
+            // Initialize dashboard when page loads
+            document.addEventListener('DOMContentLoaded', initializeDashboard);
         </script>
     </div>
 </body>
