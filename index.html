@@ -736,6 +736,11 @@
             padding: 30px;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
+
+        /* Timeline Chart Styles */
+        .timeline-chart {
+            height: 250px;
+        }
     </style>
 </head>
 <body>
@@ -823,6 +828,9 @@
                 </div>
                 <div class="toggle-option inactive" id="backupToggle">
                     💾 Backup Dashboard
+                </div>
+                <div class="toggle-option inactive" id="drToggle">
+                    🛡️ Disaster Recovery
                 </div>
             </div>
         </div>
@@ -1745,11 +1753,330 @@
             </div>
         </div>
 
+        <!-- DISASTER RECOVERY DASHBOARD SECTION -->
+        <div id="drDashboard" class="dashboard-section">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: #2c3e50;">🛡️ Disaster Recovery Dashboard</h1>
+                <p style="font-size: 1.2rem; color: #7f8c8d;">Real-time monitoring of DR components and test status</p>
+                <div style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
+                    Last updated: <span id="drLastUpdated"></span>
+                </div>
+            </div>
+
+            <div class="summary-cards">
+                <div class="card">
+                    <div class="card-icon success">📊</div>
+                    <div class="card-title">Total Components</div>
+                    <div class="card-value">8</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon success">✅</div>
+                    <div class="card-title">Successfully Tested</div>
+                    <div class="card-value">8</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon success">💯</div>
+                    <div class="card-title">Success Rate</div>
+                    <div class="card-value">100%</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon success">⚠️</div>
+                    <div class="card-title">Issues Pending</div>
+                    <div class="card-value">0</div>
+                </div>
+            </div>
+
+            <div class="kpi-snapshot">
+                <h2>🛡️ Disaster Recovery — KPI Snapshot</h2>
+                <table class="kpi-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Current Status</th>
+                            <th>Last Test</th>
+                            <th>Next Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🏢 <strong>All Applications</strong></td>
+                            <td>8/8 tested successfully</td>
+                            <td>✅ Completed</td>
+                            <td>Monitor Q2 2025 testing</td>
+                        </tr>
+                        <tr>
+                            <td>🔄 <strong>SYNC Status</strong></td>
+                            <td>All systems synchronized</td>
+                            <td>✅ Completed</td>
+                            <td>Continue monitoring sync</td>
+                        </tr>
+                        <tr>
+                            <td>🗄️ <strong>Database Backup</strong></td>
+                            <td>All databases backed up</td>
+                            <td>✅ Completed</td>
+                            <td>Verify restore procedures</td>
+                        </tr>
+                        <tr>
+                            <td>🌐 <strong>DR Location</strong></td>
+                            <td>OCI-Jeddah operational</td>
+                            <td>✅ Ready</td>
+                            <td>Quarterly failover test</td>
+                        </tr>
+                        <tr>
+                            <td>📅 <strong>Test Schedule</strong></td>
+                            <td>Q1 2025 completed</td>
+                            <td>✅ On Track</td>
+                            <td>Prepare Q2 2025 testing</td>
+                        </tr>
+                        <tr>
+                            <td>📊 <strong>Compliance</strong></td>
+                            <td>100% compliance rate</td>
+                            <td>✅ Excellent</td>
+                            <td>Maintain standards</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="charts-section">
+                <h2 style="font-size: 1.8em; color: #2c3e50; margin-bottom: 20px; text-align: center;">📈 Visual Analytics</h2>
+                
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>🎯 DR Test Status Distribution</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="drStatusPieChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>📊 Application Testing Progress</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="drProgressBarChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>🔄 Component Status Overview</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="drDonutChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>📅 Monthly DR Test Trend</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="drTrendLineChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>🌍 Geographic Distribution</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="drLocationChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>⏱️ Recovery Time Objectives</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="drRTOChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container" style="grid-column: 1 / -1;">
+                    <h3>📅 Test Completion Timeline</h3>
+                    <div class="chart-wrapper timeline-chart">
+                        <canvas id="drTimelineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 30px;">
+                <h2 style="font-size: 1.8em; color: #2c3e50; margin-bottom: 20px;">📋 Detailed Application Status</h2>
+                
+                <table class="backup-table">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Production</th>
+                            <th>SYNC Status</th>
+                            <th>UAT</th>
+                            <th>DR Test Status</th>
+                            <th>Database</th>
+                            <th>Primary</th>
+                            <th>Sync Completion</th>
+                            <th>DR-Test Completion</th>
+                            <th>DR Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Partner Portal</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IL-Backoffice</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Customer Portal</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kastle</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Amlock</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Orion</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Edaat</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-danger">NN</span></td>
+                            <td>30-06-2025</td>
+                            <td>08-01-2025</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Active Directory</strong></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-danger">N</span></td>
+                            <td><span class="status-badge status-success">Completed</span></td>
+                            <td><span class="status-badge status-success">Y</span></td>
+                            <td><span class="status-badge status-warning">HQ</span></td>
+                            <td>Completed</td>
+                            <td>Completed</td>
+                            <td>OCI-Jeddah</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 style="font-size: 1.8em; color: #2c3e50; margin: 30px 0 20px 0;">📊 Summary & Action Items</h2>
+                <div class="performance-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #27ae60;">8/8</div>
+                        <div class="metric-label">Components Tested</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #27ae60;">100%</div>
+                        <div class="metric-label">Success Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #e74c3c;">0</div>
+                        <div class="metric-label">Issues Pending</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #3498db;">30</div>
+                        <div class="metric-label">Days to Next Test</div>
+                    </div>
+                </div>
+
+                <table class="backup-table">
+                    <tbody>
+                        <tr>
+                            <td><strong>Next Scheduled Test:</strong></td>
+                            <td><span class="status-badge status-warning">Q2 2025 (June 2025)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>All components tested:</strong></td>
+                            <td><span class="status-badge status-success">Yes (8/8)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Failed tests:</strong></td>
+                            <td><span class="status-badge status-success">0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DR location readiness:</strong></td>
+                            <td><span class="status-badge status-success">OCI-Jeddah Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Key Recommendations:</strong></td>
+                            <td>
+                                <div style="padding: 10px 0;">
+                                    ✅ Continue quarterly DR testing schedule<br>
+                                    📊 Monitor sync completion times for performance<br>
+                                    📚 Review and update DR procedures<br>
+                                    🎓 Ensure all teams are trained on failover procedures<br>
+                                    🔄 Implement automated monitoring for DR processes
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="timestamp">
+                    <strong style="color: #27ae60;">✅ All DR systems operational and ready for activation</strong><br>
+                    Last DR Test: January 8, 2025 | Next Test: June 2025
+                </div>
+            </div>
+        </div>
+
         <script>
             // Global variables to track if charts are created
             let vulnerabilityChartsCreated = false;
             let taskChartsCreated = false;
             let backupChartsCreated = false;
+            let drChartsCreated = false;
 
             // Toggle functionality
             function initializeToggle() {
@@ -1757,10 +2084,12 @@
                 const taskToggle = document.getElementById('taskToggle');
                 const vulnerabilityToggle = document.getElementById('vulnerabilityToggle');
                 const backupToggle = document.getElementById('backupToggle');
+                const drToggle = document.getElementById('drToggle');
                 const ticketDashboard = document.getElementById('ticketDashboard');
                 const taskDashboard = document.getElementById('taskDashboard');
                 const vulnerabilityDashboard = document.getElementById('vulnerabilityDashboard');
                 const backupDashboard = document.getElementById('backupDashboard');
+                const drDashboard = document.getElementById('drDashboard');
 
                 function switchToTicketDashboard() {
                     // Set active states
@@ -1772,12 +2101,15 @@
                     vulnerabilityToggle.classList.remove('active');
                     backupToggle.classList.add('inactive');
                     backupToggle.classList.remove('active');
+                    drToggle.classList.add('inactive');
+                    drToggle.classList.remove('active');
                     
                     // Show/hide dashboards
                     ticketDashboard.classList.add('active');
                     taskDashboard.classList.remove('active');
                     vulnerabilityDashboard.classList.remove('active');
                     backupDashboard.classList.remove('active');
+                    drDashboard.classList.remove('active');
                 }
 
                 function switchToTaskDashboard() {
@@ -1790,12 +2122,15 @@
                     vulnerabilityToggle.classList.remove('active');
                     backupToggle.classList.add('inactive');
                     backupToggle.classList.remove('active');
+                    drToggle.classList.add('inactive');
+                    drToggle.classList.remove('active');
                     
                     // Show/hide dashboards
                     taskDashboard.classList.add('active');
                     ticketDashboard.classList.remove('active');
                     vulnerabilityDashboard.classList.remove('active');
                     backupDashboard.classList.remove('active');
+                    drDashboard.classList.remove('active');
 
                     // Create task charts if not already created
                     if (!taskChartsCreated) {
@@ -1816,12 +2151,15 @@
                     taskToggle.classList.remove('active');
                     backupToggle.classList.add('inactive');
                     backupToggle.classList.remove('active');
+                    drToggle.classList.add('inactive');
+                    drToggle.classList.remove('active');
                     
                     // Show/hide dashboards
                     vulnerabilityDashboard.classList.add('active');
                     ticketDashboard.classList.remove('active');
                     taskDashboard.classList.remove('active');
                     backupDashboard.classList.remove('active');
+                    drDashboard.classList.remove('active');
 
                     // Create vulnerability charts if not already created
                     if (!vulnerabilityChartsCreated) {
@@ -1842,12 +2180,15 @@
                     taskToggle.classList.remove('active');
                     vulnerabilityToggle.classList.add('inactive');
                     vulnerabilityToggle.classList.remove('active');
+                    drToggle.classList.add('inactive');
+                    drToggle.classList.remove('active');
                     
                     // Show/hide dashboards
                     backupDashboard.classList.add('active');
                     ticketDashboard.classList.remove('active');
                     taskDashboard.classList.remove('active');
                     vulnerabilityDashboard.classList.remove('active');
+                    drDashboard.classList.remove('active');
 
                     // Create backup charts if not already created
                     if (!backupChartsCreated) {
@@ -1859,10 +2200,325 @@
                     }
                 }
 
+                function switchToDRDashboard() {
+                    // Set active states
+                    drToggle.classList.add('active');
+                    drToggle.classList.remove('inactive');
+                    ticketToggle.classList.add('inactive');
+                    ticketToggle.classList.remove('active');
+                    taskToggle.classList.add('inactive');
+                    taskToggle.classList.remove('active');
+                    vulnerabilityToggle.classList.add('inactive');
+                    vulnerabilityToggle.classList.remove('active');
+                    backupToggle.classList.add('inactive');
+                    backupToggle.classList.remove('active');
+                    
+                    // Show/hide dashboards
+                    drDashboard.classList.add('active');
+                    ticketDashboard.classList.remove('active');
+                    taskDashboard.classList.remove('active');
+                    vulnerabilityDashboard.classList.remove('active');
+                    backupDashboard.classList.remove('active');
+
+                    // Create DR charts if not already created
+                    if (!drChartsCreated) {
+                        setTimeout(() => {
+                            createDRCharts();
+                            updateDRTimestamp();
+                            drChartsCreated = true;
+                        }, 100);
+                    }
+                }
+
                 ticketToggle.addEventListener('click', switchToTicketDashboard);
                 taskToggle.addEventListener('click', switchToTaskDashboard);
                 vulnerabilityToggle.addEventListener('click', switchToVulnerabilityDashboard);
                 backupToggle.addEventListener('click', switchToBackupDashboard);
+                drToggle.addEventListener('click', switchToDRDashboard);
+            }
+
+            // DR Dashboard Functions
+            function createDRCharts() {
+                // Color palette for DR charts
+                const drColors = {
+                    primary: '#3498db',
+                    success: '#28a745',
+                    warning: '#ffc107',
+                    danger: '#dc3545',
+                    info: '#17a2b8',
+                    secondary: ['#e74c3c', '#f39c12', '#27ae60', '#8e44ad', '#34495e']
+                };
+
+                // 1. DR Status Pie Chart
+                const drStatusPieCtx = document.getElementById('drStatusPieChart').getContext('2d');
+                new Chart(drStatusPieCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Completed Tests', 'Production Ready', 'Database Synced'],
+                        datasets: [{
+                            data: [8, 8, 8],
+                            backgroundColor: [drColors.success, drColors.primary, drColors.info],
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // 2. Progress Bar Chart
+                const drProgressBarCtx = document.getElementById('drProgressBarChart').getContext('2d');
+                new Chart(drProgressBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Partner Portal', 'IL-Backoffice', 'Customer Portal', 'Kastle', 'Amlock', 'Orion', 'Edaat', 'Active Directory'],
+                        datasets: [{
+                            label: 'Test Completion %',
+                            data: [100, 100, 100, 100, 100, 100, 100, 100],
+                            backgroundColor: drColors.success,
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    maxRotation: 45
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+
+                // 3. Donut Chart
+                const drDonutCtx = document.getElementById('drDonutChart').getContext('2d');
+                new Chart(drDonutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['All Systems Operational', 'Ready for Failover', 'Backup Synced'],
+                        datasets: [{
+                            data: [8, 8, 8],
+                            backgroundColor: [
+                                '#20c997',
+                                '#6f42c1',
+                                '#fd7e14'
+                            ],
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '60%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // 4. Trend Line Chart
+                const drTrendLineCtx = document.getElementById('drTrendLineChart').getContext('2d');
+                new Chart(drTrendLineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025', 'May 2025', 'Jun 2025'],
+                        datasets: [{
+                            label: 'Success Rate %',
+                            data: [95, 98, 100, 100, 100, 100],
+                            borderColor: drColors.primary,
+                            backgroundColor: drColors.primary + '20',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: drColors.primary,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+
+                // 5. Geographic Distribution Chart
+                const drLocationCtx = document.getElementById('drLocationChart').getContext('2d');
+                new Chart(drLocationCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['OCI-Jeddah', 'Primary Site', 'Backup Site'],
+                        datasets: [{
+                            label: 'Components',
+                            data: [8, 8, 8],
+                            backgroundColor: [
+                                drColors.success,
+                                drColors.primary,
+                                drColors.warning
+                            ],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                // 6. Recovery Time Objectives Chart
+                const drRTOCtx = document.getElementById('drRTOChart').getContext('2d');
+                new Chart(drRTOCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['RTO Target', 'RPO Target', 'Availability', 'Performance', 'Data Integrity'],
+                        datasets: [{
+                            label: 'Current Status',
+                            data: [95, 98, 100, 92, 100],
+                            backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                            borderColor: drColors.success,
+                            pointBackgroundColor: drColors.success,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            borderWidth: 3
+                        }, {
+                            label: 'Target',
+                            data: [90, 95, 99, 90, 99],
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            borderColor: drColors.primary,
+                            pointBackgroundColor: drColors.primary,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        },
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+
+                // 7. Timeline Chart
+                const drTimelineCtx = document.getElementById('drTimelineChart').getContext('2d');
+                new Chart(drTimelineCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan 8', 'Jan 15', 'Jan 22', 'Jan 29', 'Feb 5', 'Feb 12'],
+                        datasets: [{
+                            label: 'Tests Completed',
+                            data: [2, 1, 2, 1, 1, 1],
+                            backgroundColor: [
+                                drColors.success,
+                                drColors.primary,
+                                drColors.info,
+                                drColors.warning,
+                                drColors.success,
+                                drColors.primary
+                            ],
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 3
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateDRTimestamp() {
+                const now = new Date();
+                const timestamp = now.toLocaleString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('drLastUpdated').textContent = timestamp;
             }
 
             // Backup Dashboard Functions
